@@ -1,0 +1,6 @@
+#success_message{
+    align-horizontal: center;
+    text-align: center;
+    margin-bottom: 1;
+    width: 100%;
+}

@@ -1,0 +1,43 @@
+#edit_user_label {
+    align-horizontal: center;
+    text-align: center;
+    width: 100%;
+    row-span: 2;
+    column-span: 1;
+}
+
+
+
+Grid {
+    padding-top: 1;
+    height: auto;
+    width: 100%;
+    grid-size: 2 2;
+    align-horizontal: center;
+    align-vertical: middle;
+}
+
+#user_details_label {
+    row-span: 2;
+    height: 100;
+}
+
+#field_select {
+    display: none;
+    width: 60%;
+    row-span: 1;
+    padding-bottom: 1;
+}
+
+#new_value_input {
+    display: none;
+    width: 60%;
+    row-span: 1;
+}
+
+#new_details_label {
+    align-horizontal: center;
+    text-align: center;
+    width: 100%;
+    padding-top: 2;
+}

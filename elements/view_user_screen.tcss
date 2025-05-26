@@ -1,0 +1,11 @@
+#view_user_label {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+}
+
+#user_details_label {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+}

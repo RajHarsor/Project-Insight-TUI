@@ -1,0 +1,31 @@
+#add_user_title {
+    align: center middle;
+    text-align: center;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#validation_wrapper {
+    width: 100%; /* Wrapper takes full available width in its layout slot */
+    height: auto; /* Height based on content */
+    align: center middle; /* This will center its child (the Pretty widget) */
+    margin-bottom: 1; /* Moved margin here from Pretty if it's for spacing the block */
+    padding: 0;
+}
+
+#validation_result {
+    align: center middle; /* Aligns content *within* the Pretty widget */
+    text-align: center;   /* Aligns text *within* the Pretty widget */
+    text-style: italic;
+    color: red;
+    /* margin-bottom: 1; -- Consider if this margin is still needed here or on wrapper */
+    width: auto; /* Crucial: ensures Pretty widget is only as wide as its content */
+    padding: 0; 
+}
+
+#submit_button {
+    align: center middle;
+    width: 100%; /* Ensures the group takes full width */
+    height: auto; /* Height based on content */
+}
+

@@ -1,0 +1,12 @@
+Grid {
+    align: center middle;
+}
+
+#confirmation_buttons {
+    grid-size: 2 1;
+    width: 100%;
+}
+
+#user_details {
+    padding-bottom: 2;
+}

@@ -19,3 +19,11 @@ HorizontalGroup {
     text-align: center;
     margin: 0 0 1 0;
 }
+
+#initialize_button {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+    height: 30%;
+    padding-bottom: 0;
+}
