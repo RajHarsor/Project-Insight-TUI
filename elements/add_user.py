@@ -40,7 +40,7 @@ class AddUserScreen(Screen):
         SCHEDULE_OPTIONS = """1A
 2A
 3A""".splitlines()
-        
+
         yield Static("Add User to SMS Database", id="add_user_title")
         yield VerticalGroup(
             Input(placeholder="Enter Participant ID", id="participant_id_input", type='integer'),

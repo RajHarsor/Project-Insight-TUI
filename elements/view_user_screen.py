@@ -23,7 +23,7 @@ class ViewUserScreen(Screen):
             participant_id = self.query_one("#participant_id_input").value
             user_details_label = self.query_one("#user_details_label", Label)
             # Implement logic to view user details
-            user_data = get_item_from_dynamodb("Test2", participant_id)
+            user_data = get_item_from_dynamodb(participant_id)
             # Show user data in a suitable format
             if user_data:
                 details = f"Participant ID: {user_data['participant_id']}\n" \

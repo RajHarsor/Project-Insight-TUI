@@ -54,7 +54,7 @@ class ConfirmAddUserScreen(ModalScreen):
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "confirm_button":
-            add_item_to_dynamodb("Test2", self.participant_id, self.study_start_date, self.study_end_date, self.phone_number, self.schedule_type, self.lb_link)
+            add_item_to_dynamodb(self.participant_id, self.study_start_date, self.study_end_date, self.phone_number, self.schedule_type, self.lb_link)
             self.app.push_screen(SuccessScreen())
         elif event.button.id == "cancel_button":
             self.app.pop_screen()  # Close the confirmation screen

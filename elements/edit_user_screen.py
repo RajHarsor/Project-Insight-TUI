@@ -33,7 +33,7 @@ class EditUserScreen(Screen):
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "view_user_button":
             participant_id = self.query_one("#participant_id_input").value
-            user_data = get_item_from_dynamodb("Test2", participant_id)
+            user_data = get_item_from_dynamodb(participant_id)
             user_details_label = self.query_one("#user_details_label", Label)
             #print(user_data)
             if user_data:
@@ -67,7 +67,7 @@ class EditUserScreen(Screen):
             new_value = new_value_input.value
 
             # Update the user in DynamoDB
-            update_item_in_dynamodb("Test2", participant_id, selected_field, new_value)
+            update_item_in_dynamodb(participant_id, selected_field, new_value)
 
             # Show confirmation message
             new_details_label.update(f"Updated {selected_field} to {new_value} for Participant ID {participant_id}")

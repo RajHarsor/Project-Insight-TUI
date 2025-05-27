@@ -8,13 +8,14 @@ load_dotenv()
 #     # See if there is a .env file in the current directory
 #     if os.path.exists('.env'):
 
-def add_item_to_dynamodb(table_name, participant_id, study_start_date, study_end_date, phone_number, schedule_type, lb_link):
+def add_item_to_dynamodb(participant_id, study_start_date, study_end_date, phone_number, schedule_type, lb_link):
     region = "us-east-1"
 
     # Get the AWS credentials from environment variables
     aws_access_key_id = os.getenv('aws_access_key_id')
     aws_secret_access_key = os.getenv('aws_secret_access_key')
     region = os.getenv('region', region)  # Use the provided region or default to us-east-1
+    table_name = os.getenv('table_name')  # Use the provided table name or default to the one passed
 
     Session = boto3.Session(
         aws_access_key_id=aws_access_key_id,
@@ -32,15 +33,16 @@ def add_item_to_dynamodb(table_name, participant_id, study_start_date, study_end
         "phone_number": phone_number,
         "schedule_type": schedule_type,
         "lb_link": lb_link
-        })
+    })
 
-def get_item_from_dynamodb(table_name, participant_id):
+def get_item_from_dynamodb(participant_id):
     region = "us-east-1"
 
     # Get the AWS credentials from environment variables
     aws_access_key_id = os.getenv('aws_access_key_id')
     aws_secret_access_key = os.getenv('aws_secret_access_key')
     region = os.getenv('region', region)  # Use the provided region or default to us-east-1
+    table_name = os.getenv('table_name')  # Use the provided table name or default to the one passed
 
     Session = boto3.Session(
         aws_access_key_id=aws_access_key_id,
@@ -54,13 +56,14 @@ def get_item_from_dynamodb(table_name, participant_id):
     response = table.get_item(Key={"participant_id": participant_id})
     return response.get("Item")
 
-def update_item_in_dynamodb(table_name, participant_id, update_field, new_value):
+def update_item_in_dynamodb(participant_id, update_field, new_value):
     region = "us-east-1"
 
     # Get the AWS credentials from environment variables
     aws_access_key_id = os.getenv('aws_access_key_id')
     aws_secret_access_key = os.getenv('aws_secret_access_key')
     region = os.getenv('region', region)  # Use the provided region or default to us-east-1
+    table_name = os.getenv('table_name')  # Use the provided table name or default to the one passed
 
     Session = boto3.Session(
         aws_access_key_id=aws_access_key_id,
