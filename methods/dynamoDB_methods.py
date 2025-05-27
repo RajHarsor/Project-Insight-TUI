@@ -4,10 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# def initialize():
-#     # See if there is a .env file in the current directory
-#     if os.path.exists('.env'):
-
 def add_item_to_dynamodb(participant_id, study_start_date, study_end_date, phone_number, schedule_type, lb_link):
     region = "us-east-1"
 
