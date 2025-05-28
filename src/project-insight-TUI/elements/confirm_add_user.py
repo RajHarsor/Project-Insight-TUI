@@ -35,10 +35,10 @@ class ConfirmAddUserScreen(ModalScreen):
         yield VerticalGroup(
             Label(f"User Details:"),
             Label(f"Participant ID: {self.participant_id}"),  # Placeholder for participant ID
-            Label(f"Study Start Date: {self.study_start_date}"),  # Placeholder for study start date
+            Label(f"Study Start Date: {self.study_start_date}"),  # Placeholder for study start date #TODO add the phases of the study based on the start date given
             Label(f"Study End Date: {self.study_end_date}"),  # Placeholder for study end date
             Label(f"Phone Number: {self.phone_number}"),
-            Label(f"Schedule Type: {self.schedule_type}"),
+            Label(f"Schedule Type: {self.schedule_type}"), #TODO Add what the schedule means
             Label(f"Leaderboard Link: {self.lb_link}"),
             id = "user_details"
         )

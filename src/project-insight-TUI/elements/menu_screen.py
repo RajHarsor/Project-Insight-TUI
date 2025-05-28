@@ -24,6 +24,8 @@ class MenuScreen(Screen):
             self.app.push_screen("generate_report")
         elif button_id == "exit_button":
             self.app.exit()
+        elif button_id == "initialize_button":
+            self.app.push_screen("initialize_credentials")
 
     # This is the main menu screen of the application (will include buttons for different functionalities)
     def compose(self) -> ComposeResult:
@@ -31,7 +33,7 @@ class MenuScreen(Screen):
         yield Footer()
         yield Static("Project Insight - Main Menu", id="menu_title")
 
-        #yield Button("Initialize Credentials (Only for first time use)", id="initialize_button")
+        yield Button("Initialize Credentials (Only for first time use)", id="initialize_button")
         
         yield HorizontalGroup(
             Button("Add User to SMS Database", id="start_button"),
