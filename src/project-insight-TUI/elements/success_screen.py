@@ -8,7 +8,7 @@ class SuccessScreen(Screen):
     CSS_PATH = "success_screen.tcss"  # Path to the CSS file for styling
 
     def compose(self) -> ComposeResult:
-        yield Header()
+        yield Header(show_clock=True)  # Show the clock in the header
         yield Label("Success!", id="success_message")
         yield HorizontalGroup(
             Button(label="Main Menu", id="main_menu_button"),

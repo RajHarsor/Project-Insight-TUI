@@ -1,7 +1,7 @@
 from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.validation import Function
-from textual.widgets import Input, Label, Button
+from textual.widgets import Input, Label, Button, Header
 from textual.containers import HorizontalGroup
 from methods.dynamoDB_methods import get_item_from_dynamodb
 
@@ -10,6 +10,7 @@ class ViewUserScreen(Screen):
     CSS_PATH = "view_user_screen.tcss"
     
     def compose(self) -> ComposeResult:
+        yield Header(show_clock=True)  # Show the clock in the header
         yield Label("Enter the Participant ID to view user details:", id="view_user_label")
         yield Input(placeholder="Participant ID", id="participant_id_input", type='integer')
         yield Label("", id="user_details_label")  # Placeholder for user details

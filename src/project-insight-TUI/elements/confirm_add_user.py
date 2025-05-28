@@ -30,7 +30,7 @@ class ConfirmAddUserScreen(ModalScreen):
     CSS_PATH = "confirm_add_user_screen.tcss"  # Path to the CSS file for styling
 
     def compose(self) -> ComposeResult:
-        yield Header()
+        yield Header(show_clock=True)  # Show the clock in the header
         # Display the user details that are about to be added
         yield VerticalGroup(
             Label(f"User Details:"),

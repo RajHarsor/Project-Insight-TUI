@@ -1,0 +1,25 @@
+#initialize_title {
+    align: center middle;
+    width: 100%;
+    text-align: center;
+    text-style: bold underline;
+}
+
+#step1 {
+    padding-top: 1;
+    align: center middle;
+    width: 100%;
+    text-align: center;
+}
+
+#button-panel {
+    align: center middle;
+    width: 100%;
+}
+
+#step1_result {
+    padding-top: 1;
+    align: center middle;
+    width: 100%;
+    text-align: center;
+}

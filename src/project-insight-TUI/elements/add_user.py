@@ -1,7 +1,7 @@
 from textual.app import ComposeResult
 from textual.validation import Function
 from textual.screen import Screen
-from textual.widgets import Button, Static, Input, Pretty, Select
+from textual.widgets import Button, Static, Input, Pretty, Select, Header
 from textual.containers import VerticalGroup, HorizontalGroup, Container
 from textual import on
 from methods.dynamoDB_methods import add_item_to_dynamodb
@@ -41,6 +41,7 @@ class AddUserScreen(Screen):
 2A
 3A""".splitlines()
 
+        yield Header(show_clock=True)  # Show the clock in the header
         yield Static("Add User to SMS Database", id="add_user_title")
         yield VerticalGroup(
             Input(placeholder="Enter Participant ID", id="participant_id_input", type='integer'),

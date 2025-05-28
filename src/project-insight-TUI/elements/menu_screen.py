@@ -29,7 +29,7 @@ class MenuScreen(Screen):
 
     # This is the main menu screen of the application (will include buttons for different functionalities)
     def compose(self) -> ComposeResult:
-        yield Header()
+        yield Header(show_clock=True)  # Show the clock in the header
         yield Footer()
         yield Static("Project Insight - Main Menu", id="menu_title")
 
