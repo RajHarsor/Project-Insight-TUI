@@ -42,6 +42,9 @@ class ConfirmAddUserScreen(ModalScreen):
             Label(f"Leaderboard Link: {self.lb_link}"),
             id = "user_details"
         )
+        # TODO Add table showing the phase breakdown based on the study start date given
+        # TODO Give a table showing the time schedule for the user based on the schedule type given
+        
         yield Grid(
             Label("Are you sure you want to add this user?"),
         )
