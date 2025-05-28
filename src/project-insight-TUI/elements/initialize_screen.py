@@ -31,8 +31,8 @@ class InitializeCredentialsScreen(Screen):
             elif not check_env_variables():
                 self.query_one("#step1_result", Label).update("Result: Found .env file but missing required variables. Go to step 2 (Incomplete .env file).")
                 # Enable the next step button for incomplete .env file
-                self.query_one("#next-step-button-incomplete", Button).disabled = False
+                self.query_one("#next-step-button-incomplete", Button).disabled = False #TODO: Add this modal screen
             else:
                 self.query_one("#step1_result", Label).update("Result: No .env file found. Go to step 2 (no .env file).")
                 # Enable the next step button regardless of the result
-                self.query_one("#next-step-button", Button).disabled = False
+                self.query_one("#next-step-button", Button).disabled = False #TODO: Add this modal screen

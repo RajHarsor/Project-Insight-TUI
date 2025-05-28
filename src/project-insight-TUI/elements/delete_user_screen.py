@@ -13,8 +13,8 @@ class DeleteUserScreen(Screen):
         yield Input(placeholder="Participant ID", id="participant_id_input", type='integer')
         yield Label("", id='delete_user_message')  # Placeholder for delete message
         yield HorizontalGroup(
+            Button("Back", id="back_button"),
             Button("Delete User", id="delete_user_button"),
-            Button("Back", id="back_button")
         )
 
     def on_button_pressed(self, event: Button.Pressed) -> None:

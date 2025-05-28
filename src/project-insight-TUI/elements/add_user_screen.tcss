@@ -1,7 +1,7 @@
 #add_user_title {
     align: center middle;
     text-align: center;
-    text-style: bold;
+    text-style: bold underline;
     margin-bottom: 1;
 }
 
@@ -23,7 +23,7 @@
     padding: 0; 
 }
 
-#submit_button {
+#navigation_buttons {
     align: center middle;
     width: 100%; /* Ensures the group takes full width */
     height: auto; /* Height based on content */

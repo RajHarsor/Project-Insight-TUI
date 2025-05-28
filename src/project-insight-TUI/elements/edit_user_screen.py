@@ -26,8 +26,8 @@ class EditUserScreen(Screen):
         )
         yield Label("", id='new_details_label')  # Placeholder for updated user details
         yield HorizontalGroup(
-            Button("View User", id="view_user_button"),
             Button("Back", id="back_button"),
+            Button("View User", id="view_user_button"),
             Button("Update User", id="update_user_button", disabled=True)
         )
 

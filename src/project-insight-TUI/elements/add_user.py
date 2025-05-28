@@ -32,6 +32,9 @@ class AddUserScreen(Screen):
         if button_id == "back_button":
             self.app.pop_screen()
             self.app.push_screen("menu")
+        
+        if button_id == "back-button":
+            self.app.pop_screen()
 
 
     def compose(self) -> ComposeResult:
@@ -55,8 +58,11 @@ class AddUserScreen(Screen):
             Pretty("", id="validation_result"),
             id="validation_wrapper",
         )
-
-        yield Button("Submit", id="submit_button")
+        yield HorizontalGroup(
+            Button("Back", id="back_button"),
+            Button("Submit", id="submit_button"),
+            id="navigation_buttons"
+        )
 
     @on(Input.Changed)
     def show_invalid_reasons(self, event: Input.Changed) -> None:

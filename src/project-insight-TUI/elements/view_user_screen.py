@@ -15,8 +15,9 @@ class ViewUserScreen(Screen):
         yield Input(placeholder="Participant ID", id="participant_id_input", type='integer')
         yield Label("", id="user_details_label")  # Placeholder for user details
         yield HorizontalGroup (
-            Button("View User", id="view_user_button"),
             Button("Back", id="back_button"),
+            Button("View User", id="view_user_button")
+            
         )
 
     def on_button_pressed(self, event: Button.Pressed) -> None:

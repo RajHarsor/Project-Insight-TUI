@@ -18,6 +18,7 @@ HorizontalGroup {
     align: center middle;
     text-align: center;
     margin: 0 0 1 0;
+    text-style: bold underline;
 }
 
 #initialize_button {
