@@ -18,7 +18,9 @@ class MainGUI(App):
         self.install_screen(DeleteUserScreen(), name = "delete_user")
         self.push_screen("menu")
 
-
-if __name__ == "__main__":
+def main():
     app = MainGUI()
     app.run()
+
+if __name__ == "__main__":
+    main()
