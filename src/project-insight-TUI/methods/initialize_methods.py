@@ -17,3 +17,30 @@ def check_env_variables() -> bool:
             print(f"Environment variable '{var}' is not set.")
             return False
     return True  # All required environment variables are set
+
+def create_env_file(aws_access_key_id: str,
+                    aws_secret_access_key: str,
+                    table_name: str,
+                    qualtrics_survey_1a_path: str = None,
+                    qualtrics_survey_1b_path: str = None,
+                    qualtrics_survey_2_path: str = None,
+                    qualtrics_survey_3_path: str = None,
+                    qualtrics_survey_4_path: str = None):
+    # Create a .env file with the provided environment variables
+    with open('.env', 'w') as f:
+        f.write(f"aws_access_key_id={aws_access_key_id}\n")
+        f.write(f"aws_secret_access_key={aws_secret_access_key}\n")
+        f.write(f"region=us-east-1\n")
+        f.write(f"table_name={table_name}\n")
+        
+        # Optional Qualtrics survey paths
+        if qualtrics_survey_1a_path is not None:
+            f.write(f"qualtrics_survey_1a_path={qualtrics_survey_1a_path}\n")
+        if qualtrics_survey_1b_path is not None:
+            f.write(f"qualtrics_survey_1b_path={qualtrics_survey_1b_path}\n")
+        if qualtrics_survey_2_path is not None:
+            f.write(f"qualtrics_survey_2_path={qualtrics_survey_2_path}\n")
+        if qualtrics_survey_3_path is not None:
+            f.write(f"qualtrics_survey_3_path={qualtrics_survey_3_path}\n")
+        if qualtrics_survey_4_path is not None:
+            f.write(f"qualtrics_survey_4_path={qualtrics_survey_4_path}\n")

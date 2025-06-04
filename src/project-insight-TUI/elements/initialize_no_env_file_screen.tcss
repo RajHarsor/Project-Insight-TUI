@@ -1,0 +1,11 @@
+#status_labels {
+    align: center middle;
+    padding: 0;
+    offset-y: -3;
+}
+
+Label {
+    text-align: center;
+    align: center middle;
+    width: 100%;
+}

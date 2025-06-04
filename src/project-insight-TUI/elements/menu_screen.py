@@ -5,7 +5,7 @@ from textual.containers import HorizontalGroup
 
 class MenuScreen(Screen):
     CSS_PATH = "menu_screen.tcss"  # Path to the CSS file for styling
-    
+
     def render(self) -> RenderResult:
         return "Project Insight - Main Menu"
 

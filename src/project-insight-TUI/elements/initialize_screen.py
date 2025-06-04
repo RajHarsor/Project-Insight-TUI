@@ -4,11 +4,12 @@ from textual.widgets import Label, Static, Header
 from textual.containers import VerticalGroup, HorizontalGroup
 from textual.widgets import Button
 from methods.initialize_methods import check_env_file_exists, check_env_variables  # Import the method to check for .env file existence
+from elements.initialize_no_env_file_screen import InitializeNoEnvFileScreen  # Import the screen for incomplete .env file handling
 
 class InitializeCredentialsScreen(Screen):
-    
+
     CSS_PATH = "initialize_screen.tcss"  # Path to the CSS file for styling
-    
+
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)  # Show the clock in the header
         yield Label("Initialize Credentials", id="initialize_title")
@@ -36,3 +37,10 @@ class InitializeCredentialsScreen(Screen):
                 self.query_one("#step1_result", Label).update("Result: No .env file found. Go to step 2 (no .env file).")
                 # Enable the next step button regardless of the result
                 self.query_one("#next-step-button", Button).disabled = False #TODO: Add this modal screen
+                
+        if event.button.id == "next-step-button":
+            # Navigate to the next step for no .env file
+            self.app.push_screen(InitializeNoEnvFileScreen())
+        elif event.button.id == "next-step-button-incomplete":
+            # Navigate to the next step for incomplete .env file
+            self.app.push_screen("initialize_incomplete_env_file")
