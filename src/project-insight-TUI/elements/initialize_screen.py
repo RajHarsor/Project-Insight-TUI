@@ -5,6 +5,7 @@ from textual.containers import VerticalGroup, HorizontalGroup
 from textual.widgets import Button
 from methods.initialize_methods import check_env_file_exists, check_env_variables  # Import the method to check for .env file existence
 from elements.initialize_no_env_file_screen import InitializeNoEnvFileScreen  # Import the screen for incomplete .env file handling
+from elements.initialize_incomplete_credentials_screen import InitializeIncompleteCredentialsScreen  # Import the screen for incomplete .env file handling
 
 class InitializeCredentialsScreen(Screen):
 
@@ -18,6 +19,7 @@ class InitializeCredentialsScreen(Screen):
         yield HorizontalGroup(
             Button("Main Menu", id="main-menu-button"),
             Button("Check .env", id="submit-button"),
+            Button("Update .env File", id="update-env-button"), #TODO: Write this method
             Button("Go to step 2 (No .env file)", id="next-step-button", disabled=True),  # Initially disabled
             Button("Go to step 2 (Incomplete .env file)", id="next-step-button-incomplete", disabled=True),
             id="button-panel"
@@ -26,21 +28,23 @@ class InitializeCredentialsScreen(Screen):
         if event.button.id == "main-menu-button":
             self.app.push_screen("menu")
         elif event.button.id == "submit-button":
-            if check_env_file_exists() and check_env_variables():
+            exists = check_env_file_exists()  # Check if .env file exists
+            var_exists = check_env_variables()  # Check if required environment variables are set
+            if exists == True and var_exists == True:
                 # If true, update the label to indicate success and enable the next step button
                 self.query_one("#step1_result", Label).update("Result: Found .env file with all the required variables. Go back to the main menu.")
-            elif not check_env_variables():
+            elif exists == True and var_exists == False:
                 self.query_one("#step1_result", Label).update("Result: Found .env file but missing required variables. Go to step 2 (Incomplete .env file).")
                 # Enable the next step button for incomplete .env file
                 self.query_one("#next-step-button-incomplete", Button).disabled = False #TODO: Add this modal screen
             else:
                 self.query_one("#step1_result", Label).update("Result: No .env file found. Go to step 2 (no .env file).")
                 # Enable the next step button regardless of the result
-                self.query_one("#next-step-button", Button).disabled = False #TODO: Add this modal screen
-                
+                self.query_one("#next-step-button", Button).disabled = False
+
         if event.button.id == "next-step-button":
             # Navigate to the next step for no .env file
             self.app.push_screen(InitializeNoEnvFileScreen())
         elif event.button.id == "next-step-button-incomplete":
             # Navigate to the next step for incomplete .env file
-            self.app.push_screen("initialize_incomplete_env_file")
+            self.app.push_screen(InitializeIncompleteCredentialsScreen())  # This should be the screen for handling incomplete .env files

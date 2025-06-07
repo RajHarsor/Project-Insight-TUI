@@ -8,15 +8,25 @@ def check_env_file_exists() -> bool:
 
 def check_env_variables() -> bool:
     """
-    Check if the required environment variables are set.
+    Check if the required environment variables are set in the .env file only.
     Returns True if all required variables are set, otherwise False.
     """
+    # Read the .env file directly to check only those variables
+    env_vars = {}
+    if os.path.exists('.env'):
+        with open('.env', 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    env_vars[key.strip()] = value.strip()
+    
     required_vars = ['aws_access_key_id', 'aws_secret_access_key', 'region', 'table_name']
     for var in required_vars:
-        if not os.getenv(var):
-            print(f"Environment variable '{var}' is not set.")
+        if var not in env_vars or not env_vars[var]:
+            print(f"Environment variable '{var}' is not set in .env file.")
             return False
-    return True  # All required environment variables are set
+    return True  # All required environment variables are set in .env file
 
 def create_env_file(aws_access_key_id: str,
                     aws_secret_access_key: str,
@@ -44,3 +54,31 @@ def create_env_file(aws_access_key_id: str,
             f.write(f"qualtrics_survey_3_path={qualtrics_survey_3_path}\n")
         if qualtrics_survey_4_path is not None:
             f.write(f"qualtrics_survey_4_path={qualtrics_survey_4_path}\n")
+            
+def check_incomplete_env_file():
+    """See what required variables are missing from the .env file."""
+    # Read the .env file directly to check only those variables
+    env_vars = {}
+    if os.path.exists('.env'):
+        with open('.env', 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, value = line.split('=', 1)
+                    env_vars[key.strip()] = value.strip()
+    
+    missing_vars = []
+    required_vars = ['aws_access_key_id', 'aws_secret_access_key', 'region', 'table_name']
+    for var in required_vars:
+        if var not in env_vars or not env_vars[var]:
+            missing_vars.append(var)
+    return missing_vars
+
+def update_env_variable(variable: str, value: str):
+    """Update a specific environment variable in the .env file."""
+    # Load existing environment variables
+    load_dotenv()
+    
+    # Write the updated variable to the .env file
+    with open('.env', 'a') as f:
+        f.write(f"\n{variable}={value}\n")
