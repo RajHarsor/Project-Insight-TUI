@@ -1,0 +1,70 @@
+UpdateEnvFileScreen {
+    background: rgba(0, 0, 0, 0.99); /* Black background with 50% opacity */
+}
+
+#update_title {
+    align: center middle;
+    width: 100%;
+    text-align: center;
+    text-style: bold underline;
+}
+
+#current_env_vars {
+    border: heavy blue;
+    height: 15;
+    width: 50%;
+    text-overflow: clip;
+}
+
+#update_result {
+    border: heavy purple;
+    height: 15;
+    width: 50%;
+    text-overflow: clip;
+}
+#variable_input_group {
+    height: auto;
+    width: 100%;
+}
+
+
+#update_result {
+    border: heavy;
+}
+
+#env_var_select {
+    width: 50;
+    text-align: center;
+    align: center middle;
+}
+
+#update_variable_button {
+    width: 88;
+    text-align: center;
+    align: center middle;
+    offset-y: 2;
+    offset-x: 26;
+    border: none;
+    height: 5;
+    padding-bottom: 1;
+    content-align: center middle;
+}
+
+#choose_path_button {
+    width: 20;
+    text-align: center;
+    align: center middle;
+}
+
+#choose_path_button {
+    width: 40;
+    text-align: center;
+    align: center middle;
+    height: 3.5;
+}
+
+#new_value_input {
+    width: 40;
+    text-align: center;
+    align: center middle;
+}

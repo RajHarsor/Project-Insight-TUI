@@ -82,3 +82,34 @@ def update_env_variable(variable: str, value: str):
     # Write the updated variable to the .env file
     with open('.env', 'a') as f:
         f.write(f"\n{variable}={value}\n")
+        
+def get_env_variables() -> dict:
+    """Get all environment variables from the .env file."""
+    env_vars = {}
+    
+    load_dotenv()  # Load environment variables from .env file if it exists
+    with open('.env', 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                key, value = line.split('=', 1)
+                env_vars[key.strip()] = value.strip()
+    return env_vars
+
+def update_or_create_env_var(env_vars: dict, variable: str, value: str):
+    """Update an existing environment variable or create a new one in the .env file."""
+    # Load existing environment variables
+    load_dotenv()
+
+    # Check if the variable already exists in the local env file
+    if variable in env_vars:
+        # Update the existing variable
+        env_vars[variable] = value
+    else:
+        # Create a new variable
+        env_vars[variable] = value
+
+    # Write all environment variables back to the .env file
+    with open('.env', 'w') as f:
+        for key, value in env_vars.items():
+            f.write(f"{key}={value}\n")
