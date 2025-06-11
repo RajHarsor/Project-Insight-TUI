@@ -1,3 +1,7 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "project-insight-tui"
 version = "0.1.0"
@@ -9,3 +13,6 @@ dependencies = [
     "dotenv>=0.9.9",
     "textual>=3.2.0",
 ]
+
+[project.scripts]
+insight = "project_insight_tui.__main__:main"
