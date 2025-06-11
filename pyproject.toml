@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.scripts]
-insight = "project_insight_tui.__main__:main"
+insight = "project_insight_TUI.__main__:main"
 
 [tool.hatch.build]
 sources = ["src/project_insight_tui"]
