@@ -1,10 +1,24 @@
-Grid {
+ConfirmAddUserScreen {
+    background: rgba(0, 0, 0, 0.99); /* Black background with 50% opacity */
+}
+
+#user_details_title {
+    text-style: bold;
+}
+
+#confirmation_message {
     align: center middle;
+    text-align: center;
+    width: 100%;
+    offset: 0 3;
 }
 
 #confirmation_buttons {
     grid-size: 2 1;
     width: 100%;
+    align: center middle;
+    offset: 0 5;
+    height: 7;
 }
 
 #user_details {
@@ -14,10 +28,20 @@ Grid {
 
 #tables_container {
     align: center middle;
-    width: auto;
+    width: 100%;
+    offset-y: 2;
+    offset-x: 0;
+    height: 7;
 }
 
 #phase_breakdown_table {
     align: center middle;
     width: auto;
+    offset-x: 25;
+}
+
+#sms_schedule_table {
+    align: center middle;
+    width: auto;
+    offset-y: 1;
 }

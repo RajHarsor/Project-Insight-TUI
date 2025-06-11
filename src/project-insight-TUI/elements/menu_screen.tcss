@@ -12,6 +12,7 @@ HorizontalGroup {
     text-align: center;
     width: 100%;
     height: 100%;
+    offset-y: -1;
 }
 
 #menu_title {
@@ -27,4 +28,5 @@ HorizontalGroup {
     width: 100%;
     height: 30%;
     padding-bottom: 0;
+
 }

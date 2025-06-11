@@ -33,7 +33,7 @@ class MenuScreen(Screen):
         yield Footer()
         yield Static("Project Insight - Main Menu", id="menu_title")
 
-        yield Button("Initialize Credentials (Only for first time use)", id="initialize_button")
+        yield Button("Initialize Credentials", id="initialize_button")
         
         yield HorizontalGroup(
             Button("Add User to SMS Database", id="start_button"),

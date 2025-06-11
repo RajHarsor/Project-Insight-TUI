@@ -40,9 +40,9 @@ class AddUserScreen(Screen):
     def compose(self) -> ComposeResult:
         
             # Schedule Options
-        SCHEDULE_OPTIONS = """1A
-2A
-3A""".splitlines()
+        SCHEDULE_OPTIONS = """Early Bird Schedule
+Standard Schedule
+Night Owl Schedule""".splitlines()
 
         yield Header(show_clock=True)  # Show the clock in the header
         yield Static("Add User to SMS Database", id="add_user_title")
