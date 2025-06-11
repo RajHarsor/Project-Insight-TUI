@@ -43,7 +43,7 @@ UpdateEnvFileScreen {
     text-align: center;
     align: center middle;
     offset-y: 2;
-    offset-x: 26;
+    offset-x: 32;
     border: none;
     height: 5;
     padding-bottom: 1;
@@ -54,6 +54,7 @@ UpdateEnvFileScreen {
     width: 20;
     text-align: center;
     align: center middle;
+    display: none;
 }
 
 #choose_path_button {
@@ -67,4 +68,9 @@ UpdateEnvFileScreen {
     width: 40;
     text-align: center;
     align: center middle;
+    display: none;
+}
+
+#button-panel {
+    offset-y: 1;
 }

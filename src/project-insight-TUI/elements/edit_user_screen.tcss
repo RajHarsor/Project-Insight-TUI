@@ -41,3 +41,12 @@ Grid {
     width: 100%;
     padding-top: 2;
 }
+
+#schedule_type_select {
+    display: none;
+    width: 60%;
+}
+
+#buttons_group {
+    offset-y: 1;
+}

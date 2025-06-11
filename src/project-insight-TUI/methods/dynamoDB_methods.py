@@ -50,7 +50,7 @@ def get_item_from_dynamodb(participant_id):
     table = dynamodb.Table(table_name)
 
     response = table.get_item(Key={"participant_id": participant_id})
-    return response.get("Item")
+    return response.get("Item", None)
 
 def update_item_in_dynamodb(participant_id, update_field, new_value):
     region = "us-east-1"

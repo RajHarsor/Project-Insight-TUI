@@ -6,27 +6,41 @@ def check_env_file_exists() -> bool:
     load_dotenv()  # Load environment variables from .env file if it exists
     return os.path.exists('.env')  # Check if .env file exists in the current directory
 
-def check_env_variables() -> bool:
+def check_env_variables() -> tuple[bool, str]:
     """
     Check if the required environment variables are set in the .env file only.
-    Returns True if all required variables are set, otherwise False.
+    Returns (success: bool, message: str) tuple.
     """
+    current_dir = os.getcwd()
+    env_path = os.path.join(current_dir, '.env')
+    
+    # Check if .env file exists first
+    if not os.path.exists('.env'):
+        return False, f"No .env file found in current directory: {current_dir}"
+    
     # Read the .env file directly to check only those variables
     env_vars = {}
-    if os.path.exists('.env'):
+    try:
         with open('.env', 'r') as f:
             for line in f:
                 line = line.strip()
                 if line and not line.startswith('#') and '=' in line:
                     key, value = line.split('=', 1)
                     env_vars[key.strip()] = value.strip()
+    except Exception as e:
+        return False, f"Error reading .env file: {e}"
     
     required_vars = ['aws_access_key_id', 'aws_secret_access_key', 'region', 'table_name']
+    missing_vars = []
+    
     for var in required_vars:
         if var not in env_vars or not env_vars[var]:
-            print(f"Environment variable '{var}' is not set in .env file.")
-            return False
-    return True  # All required environment variables are set in .env file
+            missing_vars.append(var)
+    
+    if missing_vars:
+        return False, f"Missing environment variables: {', '.join(missing_vars)}"
+    else:
+        return True, f"All required environment variables found: {', '.join(required_vars)}"
 
 def create_env_file(aws_access_key_id: str,
                     aws_secret_access_key: str,

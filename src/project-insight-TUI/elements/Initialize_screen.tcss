@@ -15,6 +15,7 @@
 #button-panel {
     align: center middle;
     width: 100%;
+    offset-y: 1;
 }
 
 #step1_result {
@@ -22,4 +23,7 @@
     align: center middle;
     width: 100%;
     text-align: center;
+    text-wrap: wrap;
+    height: auto;
+    min-height: 3;
 }
