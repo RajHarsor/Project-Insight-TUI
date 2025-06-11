@@ -1,9 +1,9 @@
 from textual.app import ComposeResult
 from textual.screen import ModalScreen
 from textual.widgets import Label, Button, Header, Input, Select
-from methods.initialize_methods import get_env_variables, update_or_create_env_var
+from ..methods.initialize_methods import get_env_variables, update_or_create_env_var
 from textual.containers import HorizontalGroup
-from elements.menu_screen import MenuScreen  # Import the main menu screen
+from ..elements.menu_screen import MenuScreen  # Import the main menu screen
 from textual import on
 from tkinter import filedialog
 

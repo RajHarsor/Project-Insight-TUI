@@ -2,7 +2,7 @@ from textual.app import ComposeResult
 from textual.containers import HorizontalGroup
 from textual.screen import Screen
 from textual.widgets import Label, Footer, Header, Button
-from elements.menu_screen import MenuScreen
+from ..elements.menu_screen import MenuScreen
 
 class SuccessScreen(Screen):
     CSS_PATH = "success_screen.tcss"  # Path to the CSS file for styling

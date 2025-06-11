@@ -2,7 +2,7 @@ from textual.app import ComposeResult
 from textual.screen import ModalScreen
 from textual.widgets import Label, Static, Header, Button
 from textual.containers import VerticalGroup, HorizontalGroup, Container
-from methods.initialize_methods import create_env_file
+from ..methods.initialize_methods import create_env_file
 from textual.widgets import Input
 from tkinter import filedialog
 

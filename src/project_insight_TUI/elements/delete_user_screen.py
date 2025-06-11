@@ -2,7 +2,7 @@ from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.widgets import Label, Input, Button, Header
 from textual.containers import HorizontalGroup
-from methods.dynamoDB_methods import get_item_from_dynamodb, delete_item_from_dynamodb
+from ..methods.dynamoDB_methods import get_item_from_dynamodb, delete_item_from_dynamodb
 
 class DeleteUserScreen(Screen):
     CSS_PATH = "delete_user_screen.tcss"

@@ -10,9 +10,12 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "boto3>=1.38.23",
-    "dotenv>=0.9.9",
+    "python-dotenv>=0.9.9",
     "textual>=3.2.0",
 ]
 
 [project.scripts]
 insight = "project_insight_tui.__main__:main"
+
+[tool.hatch.build]
+sources = ["src"]

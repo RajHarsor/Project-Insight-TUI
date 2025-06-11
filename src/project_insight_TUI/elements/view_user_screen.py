@@ -3,7 +3,7 @@ from textual.screen import Screen
 from textual.validation import Function
 from textual.widgets import Input, Label, Button, Header
 from textual.containers import HorizontalGroup
-from methods.dynamoDB_methods import get_item_from_dynamodb
+from ..methods.dynamoDB_methods import get_item_from_dynamodb
 
 
 class ViewUserScreen(Screen):

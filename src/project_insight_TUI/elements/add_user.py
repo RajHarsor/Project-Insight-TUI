@@ -4,8 +4,8 @@ from textual.screen import Screen
 from textual.widgets import Button, Static, Input, Pretty, Select, Header
 from textual.containers import VerticalGroup, HorizontalGroup, Container
 from textual import on
-from methods.dynamoDB_methods import add_item_to_dynamodb
-from elements.confirm_add_user import ConfirmAddUserScreen
+from ..methods.dynamoDB_methods import add_item_to_dynamodb
+from ..elements.confirm_add_user import ConfirmAddUserScreen
 
 class AddUserScreen(Screen):
     CSS_PATH = "add_user_screen.tcss"  # Path to the CSS file for styling

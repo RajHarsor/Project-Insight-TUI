@@ -2,10 +2,10 @@ from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.widgets import Label, Static, Header, Button
 from textual.containers import VerticalGroup, HorizontalGroup
-from methods.initialize_methods import check_env_file_exists, check_env_variables  # Import the method to check for .env file existence
-from elements.initialize_no_env_file_screen import InitializeNoEnvFileScreen  # Import the screen for incomplete .env file handling
-from elements.initialize_incomplete_credentials_screen import InitializeIncompleteCredentialsScreen  # Import the screen for incomplete .env file handling
-from elements.update_env_file_screen import UpdateEnvFileScreen  # Import the screen for updating the .env file
+from ..methods.initialize_methods import check_env_file_exists, check_env_variables  # Import the method to check for .env file existence
+from ..elements.initialize_no_env_file_screen import InitializeNoEnvFileScreen  # Import the screen for incomplete .env file handling
+from ..elements.initialize_incomplete_credentials_screen import InitializeIncompleteCredentialsScreen  # Import the screen for incomplete .env file handling
+from ..elements.update_env_file_screen import UpdateEnvFileScreen  # Import the screen for updating the .env file
 
 class InitializeCredentialsScreen(Screen):
 

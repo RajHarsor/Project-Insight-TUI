@@ -2,8 +2,8 @@ from textual.app import ComposeResult
 from textual.screen import ModalScreen
 from textual.widgets import Label, Static, Header, Button, Select, Input
 from textual.containers import VerticalGroup, HorizontalGroup, Container
-from methods.initialize_methods import check_incomplete_env_file, update_env_variable
-from elements.menu_screen import MenuScreen
+from ..methods.initialize_methods import check_incomplete_env_file, update_env_variable
+from ..elements.menu_screen import MenuScreen
 
 LINES= """aws_access_key_id
 aws_secret_access_key
