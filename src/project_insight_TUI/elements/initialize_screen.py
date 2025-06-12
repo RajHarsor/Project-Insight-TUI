@@ -19,7 +19,7 @@ class InitializeCredentialsScreen(Screen):
         yield HorizontalGroup(
             Button("Main Menu", id="main-menu-button"),
             Button("Check .env", id="submit-button"),
-            Button("Update .env File", id="update-env-button"), #TODO: Write this method
+            Button("Update .env File", id="update-env-button"), 
             Button("Go to step 2 (No .env file)", id="next-step-button", disabled=True),  # Initially disabled
             Button("Go to step 2 (Incomplete .env file)", id="next-step-button-incomplete", disabled=True),
             id="button-panel"
