@@ -1,7 +1,7 @@
 import boto3
 import os
 from dotenv import load_dotenv
-from methods.initialize_methods import get_env_variables
+from ..methods.initialize_methods import get_env_variables
 
 load_dotenv()
 
