@@ -73,13 +73,12 @@ def check_incomplete_env_file():
     """See what required variables are missing from the .env file."""
     # Read the .env file directly to check only those variables
     env_vars = {}
-    if os.path.exists('.env'):
-        with open('.env', 'r') as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith('#') and '=' in line:
-                    key, value = line.split('=', 1)
-                    env_vars[key.strip()] = value.strip()
+    with open('.env', 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                key, value = line.split('=', 1)
+                env_vars[key.strip()] = value.strip()
     
     missing_vars = []
     required_vars = ['aws_access_key_id', 'aws_secret_access_key', 'region', 'table_name']

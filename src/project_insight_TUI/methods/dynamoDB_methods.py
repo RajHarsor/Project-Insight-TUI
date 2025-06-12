@@ -6,7 +6,7 @@ load_dotenv()
 
 def add_item_to_dynamodb(participant_id, study_start_date, study_end_date, phone_number, schedule_type, lb_link):
     region = "us-east-1"
-
+    load_dotenv()  # Load environment variables from .env file
     # Get the AWS credentials from environment variables
     aws_access_key_id = os.getenv('aws_access_key_id')
     aws_secret_access_key = os.getenv('aws_secret_access_key')
