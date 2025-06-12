@@ -5,9 +5,8 @@
 }
 
 #delete_user_message {
-    padding-top: 1;
     align: center middle;
     text-align: center;
     width: 100%;
-    offset-y: 1;
+    offset-y: 2;
 }
