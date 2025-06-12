@@ -4,6 +4,7 @@ from textual.screen import Screen
 from textual.widgets import Button, Static, Input, Pretty, Select, Header
 from textual.containers import VerticalGroup, HorizontalGroup, Container
 from textual import on
+import datetime
 from ..methods.dynamoDB_methods import add_item_to_dynamodb
 from ..elements.confirm_add_user import ConfirmAddUserScreen
 
@@ -17,7 +18,15 @@ class AddUserScreen(Screen):
         if button_id == "submit_button":
             participant_id = self.query_one("#participant_id_input").value
             study_start_date = self.query_one("#study_start_date_input").value
-            study_end_date = self.query_one("#study_end_date_input").value
+            #study_end_date = self.query_one("#study_end_date_input").value
+            # Convert study start into datetime object
+            study_start_date_dt = datetime.datetime.strptime(study_start_date, "%Y-%m-%d")
+            
+            # Calculate end day 14 days after start date
+            study_end_date_dt = study_start_date_dt + datetime.timedelta(days=14)
+            # Convert study end date into string format
+            study_end_date = study_end_date_dt.strftime("%Y-%m-%d")
+
             phone_number = self.query_one("#phone_number_input").value
             schedule_type = self.query_one("#schedule_select").value
             lb_link = self.query_one("#lb_link_input").value
@@ -49,7 +58,7 @@ Night Owl Schedule""".splitlines()
         yield VerticalGroup(
             Input(placeholder="Enter Participant ID", id="participant_id_input", type='integer'),
             Input(placeholder="Enter Study Start Date (YYYY-MM-DD)", id="study_start_date_input", type='text', validators=[Function(lambda x: len(x) == 10 and x[4] == '-' and x[7] == '-', "Date must be in YYYY-MM-DD format")]),
-            Input(placeholder="Enter Study End Date (YYYY-MM-DD)", id="study_end_date_input", type='text', validators=[Function(lambda x: len(x) == 10 and x[4] == '-' and x[7] == '-', "Date must be in YYYY-MM-DD format")]),
+            #Input(placeholder="Enter Study End Date (YYYY-MM-DD)", id="study_end_date_input", type='text', validators=[Function(lambda x: len(x) == 10 and x[4] == '-' and x[7] == '-', "Date must be in YYYY-MM-DD format")]),
             Input(placeholder="Enter Phone Number (+1XXXXXXXXXX)", id="phone_number_input", type='text', validators=[Function(lambda x: len(x) == 12 and x[0:2] == '+1' and x[2:].isdigit(), "Phone number must be in +1XXXXXXXXXX format")]),
             Input(placeholder="Enter Leaderboard Link", id="lb_link_input", type='text', validators=[Function(lambda x: len(x) > 0, "LB Link cannot be empty")]),
             Select(((line, line) for line in SCHEDULE_OPTIONS), allow_blank=True, id="schedule_select", prompt="Select Schedule"),
