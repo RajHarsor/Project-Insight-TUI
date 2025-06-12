@@ -50,14 +50,6 @@ def update_item_in_dynamodb(participant_id, update_field, new_value):
         aws_secret_access_key=env_vars['aws_secret_access_key'],
         region_name=env_vars['region']
     )
-    region = os.getenv('region', region)  # Use the provided region or default to us-east-1
-    table_name = os.getenv('table_name')  # Use the provided table name or default to the one passed
-
-    Session = boto3.Session(
-        aws_access_key_id=env_vars['aws_access_key_id'],
-        aws_secret_access_key=env_vars['aws_secret_access_key'],
-        region_name=env_vars['region']
-    )
 
     dynamodb = Session.resource('dynamodb')
     table = dynamodb.Table(env_vars['table_name'])
