@@ -9,3 +9,7 @@ Label {
     align: center middle;
     width: 100%;
 }
+
+#action_buttons {
+    offset-y: 1;
+}

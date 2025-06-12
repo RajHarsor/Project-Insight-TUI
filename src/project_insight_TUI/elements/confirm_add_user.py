@@ -31,7 +31,7 @@ class ConfirmAddUserScreen(ModalScreen):
     CSS_PATH = "confirm_add_user_screen.tcss"  # Path to the CSS file for styling
     
     # Calculate the phase breakdown based on the study start date (first phase is 4 days, second phase is 8 days, third phase is 2 days)
-    def calculate_phase_breakdown(self) -> str: #TODO Fix this based on the actual dates we need
+    def calculate_phase_breakdown(self) -> str:
         start_date = datetime.datetime.strptime(self.study_start_date, "%Y-%m-%d")
         phase_1_end = start_date + datetime.timedelta(days=3)
         phase_2_end = phase_1_end + datetime.timedelta(days=8)
@@ -48,7 +48,7 @@ class ConfirmAddUserScreen(ModalScreen):
             Label(f"Study Start Date: {self.study_start_date}"),  # Placeholder for study start date 
             Label(f"Study End Date: {self.study_end_date}"),  # Placeholder for study end date
             Label(f"Phone Number: {self.phone_number}"),
-            Label(f"Schedule Type: {self.schedule_type}"), #TODO Add what the schedule means
+            Label(f"Schedule Type: {self.schedule_type}"), 
             Label(f"Leaderboard Link: {self.lb_link}"),
             id="user_details"
         )
@@ -93,15 +93,15 @@ class ConfirmAddUserScreen(ModalScreen):
         
         if self.schedule_type == "Early Bird Schedule":
             sms_table.add_rows([
-                ("7:49 AM - 08:19 AM", "12:04 PM - 12:34 PM", "4:34 PM - 5:04 PM", "8:36 PM - 9:06 PM")
+                ("8:05 AM", "12:04 PM - 12:34 PM", "4:34 PM - 5:04 PM", "8:36 PM - 9:06 PM")
             ])
         elif self.schedule_type == "Standard Schedule":
             sms_table.add_rows([
-                ("09:56 AM - 10:26 AM", "2:40 PM - 3:10 PM", "6:28 PM - 6:58 PM", "9:58 PM - 10:28 PM")
+                ("10:05 AM", "2:40 PM - 3:10 PM", "6:28 PM - 6:58 PM", "9:58 PM - 10:28 PM")
             ])
         elif self.schedule_type == "Night Owl Schedule":
             sms_table.add_rows([
-                ("11:34 AM - 12:04 PM", "3:18 PM - 3:48 PM", "7:14 PM - 7:44 PM", "11:12 PM - 11:42 PM")
+                ("11:50 AM", "3:18 PM - 3:48 PM", "7:14 PM - 7:44 PM", "11:12 PM - 11:42 PM")
             ])
 
     def on_button_pressed(self, event: Button.Pressed) -> None:

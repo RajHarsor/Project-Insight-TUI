@@ -43,6 +43,7 @@ UpdateEnvFileScreen {
     text-align: center;
     align: center middle;
     offset-y: 2;
+    offset-x: 30;
     border: none;
     height: 5;
     padding-bottom: 1;
