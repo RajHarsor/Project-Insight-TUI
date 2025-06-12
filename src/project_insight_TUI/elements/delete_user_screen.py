@@ -15,6 +15,7 @@ class DeleteUserScreen(Screen):
         yield HorizontalGroup(
             Button("Back", id="back_button"),
             Button("Delete User", id="delete_user_button"),
+            id="buttons_group"
         )
 
     def on_button_pressed(self, event: Button.Pressed) -> None:
