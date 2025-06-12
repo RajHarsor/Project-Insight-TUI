@@ -23,7 +23,7 @@ class DeleteUserScreen(Screen):
             user_data = get_item_from_dynamodb(participant_id)
             if user_data is not None:
                 delete_item_from_dynamodb(participant_id)
-                self.query_one("#delete_user_message", Label).update("User deleted successfully.")
+                self.query_one("#delete_user_message", Label).update("User deleted successfully.") #TODO Edit this CSS, not showing up correctly
             else:
                 self.query_one("#delete_user_message", Label).update("User not found.")
 
