@@ -9,4 +9,5 @@
     align: center middle;
     text-align: center;
     width: 100%;
+    offset-y: 1;
 }
