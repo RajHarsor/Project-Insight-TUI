@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "project-insight-tui"
 version = "0.1.0"
-description = "Add your description here"
+description = "Project Insight TUI for SMS and Compliance Management"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
