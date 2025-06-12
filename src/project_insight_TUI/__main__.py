@@ -8,7 +8,7 @@ from .elements.delete_user_screen import DeleteUserScreen  # Import the DeleteUs
 from .elements.initialize_screen import InitializeCredentialsScreen  # Import the InitializeCredentialsScreen class from initialize_credentials.py
 
 class MainGUI(App):
-    TITLE = "Project Insight SMS GUI"
+    TITLE = "Project Insight GUI"
     def on_mount(self) -> None:
         self.theme = 'textual-dark'
         self.install_screen(MenuScreen(), name = "menu")
