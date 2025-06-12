@@ -1,26 +1,22 @@
 import boto3
 import os
 from dotenv import load_dotenv
+from methods.initialize_methods import get_env_variables
 
 load_dotenv()
 
 def add_item_to_dynamodb(participant_id, study_start_date, study_end_date, phone_number, schedule_type, lb_link):
-    region = "us-east-1"
-    load_dotenv()  # Load environment variables from .env file
-    # Get the AWS credentials from environment variables
-    aws_access_key_id = os.getenv('aws_access_key_id')
-    aws_secret_access_key = os.getenv('aws_secret_access_key')
-    region = os.getenv('region', region)  # Use the provided region or default to us-east-1
-    table_name = os.getenv('table_name')  # Use the provided table name or default to the one passed
+
+    env_vars = get_env_variables()
 
     Session = boto3.Session(
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key,
-        region_name=region
+        aws_access_key_id=env_vars['aws_access_key_id'],
+        aws_secret_access_key=env_vars['aws_secret_access_key'],
+        region_name=env_vars['region']
     )
 
     dynamodb = Session.resource('dynamodb')
-    table = dynamodb.Table(table_name)
+    table = dynamodb.Table(env_vars['table_name'])
 
     table.put_item(Item={
         "participant_id": participant_id,
