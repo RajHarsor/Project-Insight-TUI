@@ -24,7 +24,7 @@ This application must be run on a normal computer and will not work using Citrix
    ```
 4. The TUI should now be running in your terminal!
 
-## Updating and  Uninstalling
+## Updating and Uninstalling
 To update the application, you can run the following command:
 ```bash
 pip install --upgrade git+https://github.com/RajHarsor/Project-Insight-TUI
