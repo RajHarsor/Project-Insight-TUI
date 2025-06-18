@@ -8,6 +8,8 @@ This application must be run on a normal computer and will not work using Citrix
 ## Prerequisites
 - $\ge$ Python 3.12 (https://www.python.org/downloads/; make sure to add Python to your PATH and install pip)
 - git (https://git-scm.com/downloads; make sure to add git to your PATH)
+- **Optional** - Google Drive for Desktop (https://www.google.com/intl/en_in/drive/download/)
+  - Necessary if you need the ability to do report generation
 
 ## Installation
 
