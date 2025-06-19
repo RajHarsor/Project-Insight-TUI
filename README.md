@@ -18,6 +18,10 @@ This application must be run on a normal computer and will not work using Citrix
    ```bash
    pip install git+https://github.com/RajHarsor/Project-Insight-TUI
    ```
+   If that doesn't work, you can try the following command:
+   ```bash
+   pip3 install git+https://github.com/RajHarsor/Project-Insight-TUI
+   ```
 3. After the installation is complete, you can run the application by typing
    ```bash
    insight
