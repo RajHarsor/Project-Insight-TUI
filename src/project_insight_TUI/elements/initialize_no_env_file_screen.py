@@ -36,8 +36,8 @@ class InitializeNoEnvFileScreen(ModalScreen):
             id="survey_path_buttons"
         )
         yield VerticalGroup(
-            Label("Place", id="survey_paths_status"),
-            Label("Place", id="success_message"),
+            Label("Place", id="survey_paths_status"), # TODO: Change this
+            Label("Place", id="success_message"), # TODO: Change this
             id="status_labels"
         )
         yield HorizontalGroup(
