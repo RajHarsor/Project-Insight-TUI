@@ -12,7 +12,6 @@ This application must be run on a normal computer and will not work using Citrix
   - Necessary if you need the ability to do report generation
 
 ## Installation
-
 1. Open up the command prompt (Windows) or terminal (Linux/Mac).
 2. Put the following command into the command prompt or terminal to download
    ```bash
