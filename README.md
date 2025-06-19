@@ -39,9 +39,9 @@ pip uninstall project-insight-tui
 
 ## TODO
 - [ ] Implement report generation.
-- [ ]  Implement manual text message sending.
-- [ ]  Implement CloudWatch logs viewing.
-- [ ]  Implement Cloudwatch alarms (AWS Backend).
+- [ ] Implement manual text message sending.
+- [ ] Implement CloudWatch logs viewing.
+- [ ] Implement Cloudwatch alarms (AWS Backend).
 
 ## License
 This project is licensed under the MIT License.
