@@ -42,7 +42,7 @@ class MenuScreen(Screen):
             Button("View User in SMS Database", id="view_button"),
             Button("Edit User in SMS Database", id="edit_button"),
             Button("Delete User from SMS Database", id="delete_button"),
-            Button("Generate Report", id="report_button", disabled = True), #TODO Implement this functionality
+            Button("Generate Report/Check Compliance", id="report_button", disabled = True), #TODO Implement this functionality
             Button("Send Test SMS or Manually Send Survey", id="send_test_sms_button"),
             Button("Exit", id="exit_button")
         )
