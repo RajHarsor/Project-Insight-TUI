@@ -1,0 +1,23 @@
+SendSMSConfirmationScreen {
+    background: rgba(0, 0, 0, 0.99); /* Black background with 50% opacity */
+}
+
+#confirmation_message {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+    offset-y: 2;
+    color: white;
+}
+
+#status_message {
+    align: center middle;
+    text-align: center;
+    display: none;
+    width: 100%;
+    offset-y: 4;
+}
+
+#button_group {
+    offset-y: 5;
+}

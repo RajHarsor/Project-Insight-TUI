@@ -5,6 +5,7 @@ from textual.containers import VerticalGroup, HorizontalGroup
 from datetime import datetime, timezone
 from ..methods.dynamoDB_methods import get_item_from_dynamodb
 from textual import on
+from ..elements.send_sms_confirmation_screen import SendSMSConfirmationScreen
 
 LINES="""Custom Message
 EMA Survey 1A (link with leaderboard)
@@ -99,9 +100,16 @@ class SendSMSScreen(Screen):
             self.app.pop_screen()
         
         elif button_id == "send_sms_button":
-            # TODO: Add confirmation dialog before sending SMS (modal screen)
-            pass
-        
+            # Send Participant # and the full message to the SendSMSConfirmationScreen
+            participant_id = self.query_one("#participant_id_input", Input).value
+            custom_message_input = self.query_one("#custom_message_input", TextArea).text
+            if custom_message_input.strip() == "":
+                custom_message_input = None
+            premade_button_text = str(self.query_one("#premade_button_text", Label).renderable)
+            if premade_button_text.strip() == "":
+                premade_button_text = None
+            self.app.push_screen(SendSMSConfirmationScreen(participant_id=participant_id, custom_message=custom_message_input, premade_button_text=premade_button_text))
+
     @on(Select.Changed)
     def on_message_type_changed(self, event: Select.Changed) -> None:
         selected_option = event.select.value
@@ -114,6 +122,8 @@ class SendSMSScreen(Screen):
             # Display the custom message input field - normally its hidden
             custom_message_input = self.query_one("#custom_message_input", TextArea)
             custom_message_input.display = True
+            # Enable the send SMS button
+            self.query_one("#send_sms_button", Button).disabled = False
         elif selected_option == "EMA Survey 1A (link with leaderboard)":
             custom_message_input = self.query_one("#custom_message_input", TextArea)
             custom_message_input.display = False
@@ -150,7 +160,7 @@ class SendSMSScreen(Screen):
             premade_button_text = self.query_one("#premade_button_text", Label)
             premade_button_text.display = True
             self.query_one("#premade_button_text", Label).disabled = False
-            self.query_one("#custom_message_input", Input).disabled = True
+            self.query_one("#custom_message_input", TextArea).disabled = True
             self.query_one("#send_sms_button", Button).disabled = False
         elif selected_option == "EMA Survey 3":
             custom_message_input = self.query_one("#custom_message_input", TextArea)
@@ -172,5 +182,5 @@ class SendSMSScreen(Screen):
             premade_button_text = self.query_one("#premade_button_text", Label)
             premade_button_text.display = True
             self.query_one("#premade_button_text", Label).disabled = False
-            self.query_one("#custom_message_input", Input).disabled = True
+            self.query_one("#custom_message_input", TextArea).disabled = True
             self.query_one("#send_sms_button", Button).disabled = False
