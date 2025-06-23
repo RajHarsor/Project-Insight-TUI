@@ -1,6 +1,6 @@
 from textual.app import ComposeResult
 from textual.screen import Screen
-from textual.widgets import Footer, Header, Button, Select, Input, Label
+from textual.widgets import Footer, Header, Button, Select, Input, Label, TextArea
 from textual.containers import VerticalGroup, HorizontalGroup
 from datetime import datetime, timezone
 from ..methods.dynamoDB_methods import get_item_from_dynamodb
@@ -23,13 +23,14 @@ class SendSMSScreen(Screen):
         yield HorizontalGroup(
             Input(placeholder="Participant ID", id="participant_id_input", type='integer'),
             Button("Search for Participant", id="search_participant_button"),
+            id="participant_search_group"
         )
         yield Label("", id = 'participant_search_info', disabled=True)
         yield Label("Select the type of message you would like to send:", id="message_type_label")
         yield HorizontalGroup(
             Select(((line, line) for line in LINES), id="message_type_select", prompt="Select a message type", disabled=True),
             Label("", id='premade_button_text', disabled=True),
-            Input(placeholder="Enter your custom message here", id="custom_message_input", type='text', disabled=True),
+            TextArea(id="custom_message_input", disabled=True),
             id="message_input_group"
         )
         yield HorizontalGroup(
@@ -82,6 +83,11 @@ class SendSMSScreen(Screen):
                           f"Day in Study: {participant_day}"
                 user_details_label.update(details)
                 user_details_label.disabled = False
+                message_type_label = self.query_one("#message_type_label", Label)
+                message_type_label.display = True
+                message_type_select = self.query_one("#message_type_select", Select)
+                message_type_select.display = True
+                message_type_label.disabled = False
                 message_type_select.disabled = False
                 
             except Exception as e:
@@ -99,49 +105,72 @@ class SendSMSScreen(Screen):
     @on(Select.Changed)
     def on_message_type_changed(self, event: Select.Changed) -> None:
         selected_option = event.select.value
-        if selected_option == "custom":
+        if selected_option == "Custom Message":
             # Enable the custom message input field and disable the premade button text
-            self.query_one("#custom_message_input", Input).disabled = False
+            self.query_one("#custom_message_input", TextArea).disabled = False
             self.query_one("#premade_button_text", Label).disabled = True
+            premade_button_text = self.query_one("#premade_button_text", Label)
+            premade_button_text.display = False
+            # Display the custom message input field - normally its hidden
+            custom_message_input = self.query_one("#custom_message_input", TextArea)
+            custom_message_input.display = True
         elif selected_option == "EMA Survey 1A (link with leaderboard)":
+            custom_message_input = self.query_one("#custom_message_input", TextArea)
+            custom_message_input.display = False
             link = getattr(self, "user_data", {}).get('lb_link', '')
             if link:
                 message = f"Hello from the Project INSIGHT Team at Rowan University. At your earliest convenience please take this survey: {link}. If you have any questions please reach out to us at projectinsight@rowan.edu. Thank you!"
                 self.query_one("#premade_button_text", Label).update(message)
                 self.query_one("#premade_button_text", Label).disabled = False
-                self.query_one("#custom_message_input", Input).disabled = True
+                self.query_one("#custom_message_input", TextArea).disabled = True
                 self.query_one("#send_sms_button", Button).disabled = False
             else:
                 self.query_one("#premade_button_text", Label).update("No leaderboard link available.")
                 self.query_one("#premade_button_text", Label).disabled = False
-                self.query_one("#custom_message_input", Input).disabled = True
+                self.query_one("#custom_message_input", TextArea).disabled = True
                 self.query_one("#send_sms_button", Button).disabled = True
                 self.query_one("#send_sms_button", Button).disabled = True
         elif selected_option == "EMA Survey 1B (link without leaderboard)":
+            custom_message_input = self.query_one("#custom_message_input", TextArea)
+            custom_message_input.display = False
             link = "https://example.com/survey1b"  # TODO Replace with actual link
             message = f"Hello from the Project INSIGHT Team at Rowan University. At your earliest convenience please take this survey: {link}. If you have any questions please reach out to us at projectinsight@rowan.edu. Thank you!"
             self.query_one("#premade_button_text", Label).update(message)
+            premade_button_text = self.query_one("#premade_button_text", Label)
+            premade_button_text.display = True
             self.query_one("#premade_button_text", Label).disabled = False
-            self.query_one("#custom_message_input", Input).disabled = True
+            self.query_one("#custom_message_input", TextArea).disabled = True
             self.query_one("#send_sms_button", Button).disabled = False
         elif selected_option == "EMA Survey 2":
+            custom_message_input = self.query_one("#custom_message_input", TextArea)
+            custom_message_input.display = False
             link = "https://example.com/survey2"  # TODO Replace with actual link
             message = f"Hello from the Project INSIGHT Team at Rowan University. At your earliest convenience please take this survey: {link}. If you have any questions please reach out to us at projectinsight@rowan.edu. Thank you!"
             self.query_one("#premade_button_text", Label).update(message)
+            premade_button_text = self.query_one("#premade_button_text", Label)
+            premade_button_text.display = True
             self.query_one("#premade_button_text", Label).disabled = False
             self.query_one("#custom_message_input", Input).disabled = True
             self.query_one("#send_sms_button", Button).disabled = False
         elif selected_option == "EMA Survey 3":
+            custom_message_input = self.query_one("#custom_message_input", TextArea)
+            custom_message_input.display = False
             link = "https://example.com/survey3"  # TODO Replace with actual link
             message = f"Hello from the Project INSIGHT Team at Rowan University. At your earliest convenience please take this survey: {link}. If you have any questions please reach out to us at projectinsight@rowan.edu. Thank you!"
             self.query_one("#premade_button_text", Label).update(message)
+            premade_button_text = self.query_one("#premade_button_text", Label)
+            premade_button_text.display = True
             self.query_one("#premade_button_text", Label).disabled = False
-            self.query_one("#custom_message_input", Input).disabled = True
+            self.query_one("#custom_message_input", TextArea).disabled = True
             self.query_one("#send_sms_button", Button).disabled = False
         elif selected_option == "EMA Survey 4":
+            custom_message_input = self.query_one("#custom_message_input", TextArea)
+            custom_message_input.display = False
             link = "https://example.com/survey4"  # TODO Replace with actual link
             message = f"Hello from the Project INSIGHT Team at Rowan University. At your earliest convenience please take this survey: {link}. If you have any questions please reach out to us at projectinsight@rowan.edu. Thank you!"
             self.query_one("#premade_button_text", Label).update(message)
+            premade_button_text = self.query_one("#premade_button_text", Label)
+            premade_button_text.display = True
             self.query_one("#premade_button_text", Label).disabled = False
             self.query_one("#custom_message_input", Input).disabled = True
             self.query_one("#send_sms_button", Button).disabled = False

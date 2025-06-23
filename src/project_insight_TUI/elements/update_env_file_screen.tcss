@@ -39,15 +39,20 @@ UpdateEnvFileScreen {
 }
 
 #update_variable_button {
-    width: 88;
+    width: 88%;
     text-align: center;
     align: center middle;
-    offset-y: 2;
-    offset-x: 30;
+    offset-y: -6;
     border: none;
     height: 5;
     padding-bottom: 1;
-    content-align: center middle;
+}
+
+#update_button_group {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+    offset-y: -1;
 }
 
 #choose_path_button {
@@ -72,5 +77,5 @@ UpdateEnvFileScreen {
 }
 
 #button-panel {
-    offset-y: 1;
+    offset-y: -16;
 }

@@ -1,0 +1,88 @@
+#send_sms_label {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+    offset-y: 1;
+    height: 5%;
+}
+
+#participant_search_group {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+    offset-y: 1;
+}
+
+#participant_id_input {
+    align: center middle;
+    text-align: center;
+    width: 30%;
+    height: 3;
+    padding-bottom: 0;
+}
+
+#search_participant_button {
+    align: center middle;
+    text-align: center;
+    width: 20%;
+    height: 3;
+    padding-bottom: 0;
+}
+
+#participant_search_info {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+    offset-y: -7;
+}
+
+#message_input_group {
+    offset-y: 1;
+    align: center middle;
+    text-align: center;
+}
+
+#message_type_label {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+    offset-y: -3;
+    display: none;
+
+}
+
+#custom_message_input {
+    align: center middle;
+    text-align: center;
+    width: 50%;
+    height: 6;
+    padding-bottom: 0;
+    offset-y: -8; /* Adjusted to align with other elements */
+    display: none; /* Hidden by default */
+    text-wrap: wrap; /* Allow text to wrap within the input */
+    text-overflow: fold; /* Allow text to wrap within the input */
+}
+
+#message_type_select {
+    align: center middle;
+    text-align: center;
+    width: 50%;
+    height: 5;
+    padding-bottom: 0;
+    display: none; /* Hidden by default */
+    offset-y: -9; /* Adjusted to align with other elements */
+}
+
+#premade_button_text {
+    align: center middle;
+    text-align: center;
+    width: 50%;
+    offset-y: -8;
+}
+
+#action_buttons {
+    align: center middle;
+    text-align: center;
+    width: 100%;
+    offset-y: -14;
+}

@@ -33,13 +33,15 @@ Grid {
     display: none;
     width: 60%;
     row-span: 1;
+    padding-bottom: 1;
 }
 
 #new_details_label {
     align-horizontal: center;
     text-align: center;
     width: 100%;
-    padding-top: 2;
+    padding-top: 0;
+    offset-y: 1;
 }
 
 #schedule_type_select {

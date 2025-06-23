@@ -22,8 +22,9 @@ class MainGUI(App):
         self.install_screen(SendSMSScreen(), name = "send_test_sms")  
         self.push_screen("menu")
 
+app = MainGUI()
+
 def main():
-    app = MainGUI()
     app.run()
 
 if __name__ == "__main__":

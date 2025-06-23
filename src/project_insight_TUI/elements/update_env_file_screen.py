@@ -38,7 +38,10 @@ class UpdateEnvFileScreen(ModalScreen):
             Button("Choose Path", id="choose_path_button", disabled=True),  # Initially disabled, will be enabled based on selection
             id="variable_input_group"
         )
-        yield Button("Update Variable", id="update_variable_button", compact=True, disabled=True)  # Initially disabled, will be enabled based on selection
+        yield HorizontalGroup(
+            Button("Update Variable", id="update_variable_button", disabled=True),
+            id="update_button_group"
+        )
         yield HorizontalGroup(
             Button("Go Back", id="go-back-button"),
             Button("Main Menu", id="main-menu-button"),
