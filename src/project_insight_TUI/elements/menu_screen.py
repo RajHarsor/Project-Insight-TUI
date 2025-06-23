@@ -26,6 +26,8 @@ class MenuScreen(Screen):
             self.app.exit()
         elif button_id == "initialize_button":
             self.app.push_screen("initialize_credentials")
+        elif button_id == "send_test_sms_button":
+            self.app.push_screen("send_test_sms")
 
     # This is the main menu screen of the application (will include buttons for different functionalities)
     def compose(self) -> ComposeResult:
@@ -41,6 +43,6 @@ class MenuScreen(Screen):
             Button("Edit User in SMS Database", id="edit_button"),
             Button("Delete User from SMS Database", id="delete_button"),
             Button("Generate Report", id="report_button", disabled = True), #TODO Implement this functionality
-            Button("Send Test SMS or Manually Send Survey", id="send_test_sms_button", disabled = True), #TODO Implement this functionality
+            Button("Send Test SMS or Manually Send Survey", id="send_test_sms_button"), #TODO Implement this functionality
             Button("Exit", id="exit_button")
         )
