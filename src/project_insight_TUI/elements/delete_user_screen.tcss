@@ -8,9 +8,9 @@
     align: center middle;
     text-align: center;
     width: 100%;
-    offset-y: 3;
+    offset-y: 1;
 }
 
 #buttons_group {
-    offset-y: 2;
+    offset-y: 4;
 }
