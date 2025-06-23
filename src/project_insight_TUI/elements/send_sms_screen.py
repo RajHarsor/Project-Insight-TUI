@@ -133,7 +133,7 @@ class SendSMSScreen(Screen):
         elif selected_option == "EMA Survey 1B (link without leaderboard)":
             custom_message_input = self.query_one("#custom_message_input", TextArea)
             custom_message_input.display = False
-            link = "https://example.com/survey1b"  # TODO Replace with actual link
+            link = "https://rowan.co1.qualtrics.com/jfe/form/SV_869PIgLB4XwPD5s"
             message = f"Hello from the Project INSIGHT Team at Rowan University. At your earliest convenience please take this survey: {link}. If you have any questions please reach out to us at projectinsight@rowan.edu. Thank you!"
             self.query_one("#premade_button_text", Label).update(message)
             premade_button_text = self.query_one("#premade_button_text", Label)
@@ -144,7 +144,7 @@ class SendSMSScreen(Screen):
         elif selected_option == "EMA Survey 2":
             custom_message_input = self.query_one("#custom_message_input", TextArea)
             custom_message_input.display = False
-            link = "https://example.com/survey2"  # TODO Replace with actual link
+            link = "https://rowan.co1.qualtrics.com/jfe/form/SV_aWBwIQVfSMS3kk6"
             message = f"Hello from the Project INSIGHT Team at Rowan University. At your earliest convenience please take this survey: {link}. If you have any questions please reach out to us at projectinsight@rowan.edu. Thank you!"
             self.query_one("#premade_button_text", Label).update(message)
             premade_button_text = self.query_one("#premade_button_text", Label)
@@ -155,7 +155,7 @@ class SendSMSScreen(Screen):
         elif selected_option == "EMA Survey 3":
             custom_message_input = self.query_one("#custom_message_input", TextArea)
             custom_message_input.display = False
-            link = "https://example.com/survey3"  # TODO Replace with actual link
+            link = "https://rowan.co1.qualtrics.com/jfe/form/SV_efH33MAvT9pkTr0"
             message = f"Hello from the Project INSIGHT Team at Rowan University. At your earliest convenience please take this survey: {link}. If you have any questions please reach out to us at projectinsight@rowan.edu. Thank you!"
             self.query_one("#premade_button_text", Label).update(message)
             premade_button_text = self.query_one("#premade_button_text", Label)
@@ -166,7 +166,7 @@ class SendSMSScreen(Screen):
         elif selected_option == "EMA Survey 4":
             custom_message_input = self.query_one("#custom_message_input", TextArea)
             custom_message_input.display = False
-            link = "https://example.com/survey4"  # TODO Replace with actual link
+            link = "https://rowan.co1.qualtrics.com/jfe/form/SV_bC8e4N2Nqu3234i"
             message = f"Hello from the Project INSIGHT Team at Rowan University. At your earliest convenience please take this survey: {link}. If you have any questions please reach out to us at projectinsight@rowan.edu. Thank you!"
             self.query_one("#premade_button_text", Label).update(message)
             premade_button_text = self.query_one("#premade_button_text", Label)
