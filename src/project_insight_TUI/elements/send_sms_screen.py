@@ -16,7 +16,7 @@ EMA Survey 4""".splitlines()
 
 
 class SendSMSScreen(Screen):
-    CSS_PATH = "send_sms_screen.tcss"  # TODO: Make this file and style it
+    CSS_PATH = "send_sms_screen.tcss"  
     
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True)
