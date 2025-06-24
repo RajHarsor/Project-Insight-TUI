@@ -32,9 +32,18 @@ To update the application, you can run the following command:
 ```bash
 pip install --upgrade git+https://github.com/RajHarsor/Project-Insight-TUI
 ```
+If that doesn't work, you can try the following command:
+```bash
+pip3 install --upgrade git+https://github.com/RajHarsor/Project-Insight-TUI
+```
+
 To uninstall the application, you can run the following command:
 ```bash
 pip uninstall project-insight-tui
+```
+If that doesn't work, you can try the following command:
+```bash
+pip3 uninstall project-insight-tui
 ```
 
 ## TODO
