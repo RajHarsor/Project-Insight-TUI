@@ -8,19 +8,25 @@ from .elements.delete_user_screen import DeleteUserScreen  # Import the DeleteUs
 from .elements.initialize_screen import InitializeCredentialsScreen  # Import the InitializeCredentialsScreen class from initialize_credentials.py
 from .elements.send_sms_screen import SendSMSScreen  # Import the SendSMSScreen class from send_sms_screen.py
 from .elements.confirm_add_user import ConfirmAddUserScreen  # Import the ConfirmAddUserScreen class from confirm_add_user.py
+from .elements.initialize_incomplete_credentials_screen import InitializeIncompleteCredentialsScreen  # Import the InitializeIncompleteCredentialsScreen class from initialize_incomplete_credentials_screen.py
 
 class MainGUI(App):
     TITLE = "Project Insight GUI"
     def on_mount(self) -> None:
         self.theme = 'nord'
         self.install_screen(MenuScreen(), name = "menu")
+        
         self.install_screen(AddUserScreen(), name = "add_user")
-        self.install_screen(ConfirmAddUserScreen(), name = "confirm_add_user")
+        self.install_screen(ConfirmAddUserScreen(participant_id = None, study_start_date = None, study_end_date = None, phone_number = None, schedule_type = None, lb_link = None), name = "confirm_add_user")
+        
         self.install_screen(SuccessScreen(), name = "success")
         self.install_screen(ViewUserScreen(), name = "view_user")
         self.install_screen(EditUserScreen(), name = "edit_user")
         self.install_screen(DeleteUserScreen(), name = "delete_user")
+        
         self.install_screen(InitializeCredentialsScreen(), name = "initialize_credentials")
+        self.install_screen(InitializeIncompleteCredentialsScreen(), name = "initialize_incomplete_credentials")
+        
         self.install_screen(SendSMSScreen(), name = "send_test_sms")  
         self.push_screen("menu")
 

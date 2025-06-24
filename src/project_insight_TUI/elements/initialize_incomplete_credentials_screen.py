@@ -1,5 +1,5 @@
 from textual.app import ComposeResult
-from textual.screen import ModalScreen
+from textual.screen import Screen
 from textual.widgets import Label, Static, Header, Button, Select, Input
 from textual.containers import VerticalGroup, HorizontalGroup, Container
 from ..methods.initialize_methods import check_incomplete_env_file, update_env_variable
@@ -10,7 +10,7 @@ aws_secret_access_key
 region
 table_name""".splitlines()
 
-class InitializeIncompleteCredentialsScreen(ModalScreen):
+class InitializeIncompleteCredentialsScreen(Screen):
     CSS_PATH = "initialize_incomplete_credentials_screen.tcss"
 
     def compose(self) -> ComposeResult:
