@@ -1,5 +1,5 @@
 from textual.app import ComposeResult
-from textual.screen import ModalScreen
+from textual.screen import Screen
 from textual.widgets import Label, Button, Header, Input, Select
 from ..methods.initialize_methods import get_env_variables, update_or_create_env_var
 from textual.containers import HorizontalGroup
@@ -21,7 +21,7 @@ CREDENTIAL_VARS = ["aws_access_key_id", "aws_secret_access_key", "region", "tabl
 PATH_VARS = ["qualtrics_survey_1a_path", "qualtrics_survey_1b_path", "qualtrics_survey_2_path", 
             "qualtrics_survey_3_path", "qualtrics_survey_4_path"]
 
-class UpdateEnvFileScreen(ModalScreen):
+class UpdateEnvFileScreen(Screen):
     CSS_PATH = "update_env_file_screen.tcss"  # Path to the CSS file for styling
 
     def compose(self) -> ComposeResult:

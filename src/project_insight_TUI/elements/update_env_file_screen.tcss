@@ -1,7 +1,3 @@
-UpdateEnvFileScreen {
-    background: rgba(0, 0, 0, 0.99); /* Black background with 50% opacity */
-}
-
 #update_title {
     align: center middle;
     width: 100%;
