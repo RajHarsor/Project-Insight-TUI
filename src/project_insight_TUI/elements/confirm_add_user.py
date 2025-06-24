@@ -1,13 +1,13 @@
 from textual.app import ComposeResult
 from textual.containers import Grid
-from textual.screen import ModalScreen
+from textual.screen import Screen
 from textual.widgets import Button, Footer, Header, Label, DataTable
 from ..methods.dynamoDB_methods import add_item_to_dynamodb
 from textual.containers import VerticalGroup, HorizontalGroup
 from ..elements.success_screen import SuccessScreen
 import datetime
 
-class ConfirmAddUserScreen(ModalScreen):
+class ConfirmAddUserScreen(Screen):
     def __init__(
         self,
         participant_id: str,

@@ -7,6 +7,7 @@ from .elements.edit_user_screen import EditUserScreen  # Import the EditUserScre
 from .elements.delete_user_screen import DeleteUserScreen  # Import the DeleteUserScreen class from delete_user_screen.py
 from .elements.initialize_screen import InitializeCredentialsScreen  # Import the InitializeCredentialsScreen class from initialize_credentials.py
 from .elements.send_sms_screen import SendSMSScreen  # Import the SendSMSScreen class from send_sms_screen.py
+from .elements.confirm_add_user import ConfirmAddUserScreen  # Import the ConfirmAddUserScreen class from confirm_add_user.py
 
 class MainGUI(App):
     TITLE = "Project Insight GUI"
@@ -14,6 +15,7 @@ class MainGUI(App):
         self.theme = 'nord'
         self.install_screen(MenuScreen(), name = "menu")
         self.install_screen(AddUserScreen(), name = "add_user")
+        self.install_screen(ConfirmAddUserScreen(), name = "confirm_add_user")
         self.install_screen(SuccessScreen(), name = "success")
         self.install_screen(ViewUserScreen(), name = "view_user")
         self.install_screen(EditUserScreen(), name = "edit_user")
