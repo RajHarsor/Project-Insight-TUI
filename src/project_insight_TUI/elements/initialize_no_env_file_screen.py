@@ -1,12 +1,12 @@
 from textual.app import ComposeResult
-from textual.screen import ModalScreen
+from textual.screen import Screen
 from textual.widgets import Label, Static, Header, Button
 from textual.containers import VerticalGroup, HorizontalGroup, Container
 from ..methods.initialize_methods import create_env_file
 from textual.widgets import Input
 from tkinter import filedialog
 
-class InitializeNoEnvFileScreen(ModalScreen):
+class InitializeNoEnvFileScreen(Screen):
     CSS_PATH = "initialize_no_env_file_screen.tcss"
     
     def __init__(self):
@@ -85,7 +85,7 @@ class InitializeNoEnvFileScreen(ModalScreen):
                             self.qualtrics_survey_1a_path, self.qualtrics_survey_1b_path,
                             self.qualtrics_survey_2_path, self.qualtrics_survey_3_path,
                             self.qualtrics_survey_4_path)
-            self.query_one("#success_message", Label).update("Success: .env file created with the provided credentials.")
+            self.update_survey_status("Environment file created successfully!")
         elif button_id == "back_to_menu_button":
             self.app.pop_screen()
     

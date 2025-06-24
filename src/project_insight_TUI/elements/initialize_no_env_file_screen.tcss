@@ -1,7 +1,3 @@
-InitializeNoEnvFileScreen {
-    background: rgba(0, 0, 0, 0.99)
-}
-
 #status_labels {
     align: center middle;
     padding: 0;
@@ -15,7 +11,7 @@ Label {
 }
 
 #action_buttons {
-    offset-y: 1;
+    offset-y: -4;
 }
 
 #survey_path_buttons {
