@@ -1,7 +1,3 @@
-SendSMSConfirmationScreen {
-    background: rgba(0, 0, 0, 0.99); /* Black background with 50% opacity */
-}
-
 #confirmation_message {
     align: center middle;
     text-align: center;

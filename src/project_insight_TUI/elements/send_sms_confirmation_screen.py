@@ -1,10 +1,10 @@
 from textual.app import ComposeResult
-from textual.screen import ModalScreen
+from textual.screen import Screen
 from textual.widgets import Button, Label
 from textual.containers import HorizontalGroup
 from ..elements.menu_screen import MenuScreen
 
-class SendSMSConfirmationScreen(ModalScreen):
+class SendSMSConfirmationScreen(Screen):
     def __init__(
         self,
         participant_id: str,
