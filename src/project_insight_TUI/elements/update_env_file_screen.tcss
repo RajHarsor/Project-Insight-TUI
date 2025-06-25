@@ -19,8 +19,9 @@
     text-overflow: clip;
 }
 #variable_input_group {
-    height: auto;
+    height: 15%;
     width: 100%;
+    offset-y: -25;
 }
 
 
@@ -38,17 +39,19 @@
     width: 88%;
     text-align: center;
     align: center middle;
-    offset-y: -6;
+    offset-y: 0;
     border: none;
     height: 5;
-    padding-bottom: 1;
+    padding-bottom: 0;
+
 }
 
 #update_button_group {
     align: center middle;
     text-align: center;
     width: 100%;
-    offset-y: -1;
+    offset-y: -25;
+    height: 5;
 }
 
 #choose_path_button {
@@ -73,5 +76,10 @@
 }
 
 #button-panel {
-    offset-y: -16;
+    offset-y: -23;
+    height: 15;
+}
+
+#env_vars_display {
+    offset-y: -12;
 }
