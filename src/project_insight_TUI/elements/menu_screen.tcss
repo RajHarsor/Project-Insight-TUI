@@ -2,8 +2,8 @@ Button {
     align: center middle;
     text-align: center;
     /* padding: 5; */
-    height: 10;
-    width: 5%;
+    height: 14;
+    width: 13%;
     margin: 0 2;
 }
 
