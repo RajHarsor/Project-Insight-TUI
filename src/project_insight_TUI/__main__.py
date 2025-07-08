@@ -12,6 +12,8 @@ from .elements.initialize_incomplete_credentials_screen import InitializeIncompl
 from .elements.initialize_no_env_file_screen import InitializeNoEnvFileScreen  # Import the InitializeNoEnvFileScreen class from initialize_no_env_file_screen.py
 from .elements.send_sms_confirmation_screen import SendSMSConfirmationScreen  # Import the SendSMSConfirmationScreen class from send_sms_confirmation_screen.py
 from .elements.update_env_file_screen import UpdateEnvFileScreen  # Import the UpdateEnvFileScreen class from update_env_file_screen.py
+from .elements.generate_report_screen import GenerateReportScreen  # Import the GenerateReportScreen class from generate_report_screen.py
+from .elements.check_individual_compliance_screen import CheckIndividualComplianceScreen  # Import the CheckIndividualComplianceScreen class from check_individual_compliance_screen.py
 
 class MainGUI(App):
     TITLE = "Project Insight GUI"
@@ -31,6 +33,9 @@ class MainGUI(App):
         self.install_screen(InitializeIncompleteCredentialsScreen(), name = "initialize_incomplete_credentials")
         self.install_screen(InitializeNoEnvFileScreen(), name = "initialize_no_env_file")
         self.install_screen(UpdateEnvFileScreen(), name = "update_env_file")
+        
+        self.install_screen(GenerateReportScreen(), name = "generate_report")
+        self.install_screen(CheckIndividualComplianceScreen(), name = "check_individual_compliance")
         
         self.install_screen(SendSMSScreen(), name = "send_test_sms")
         self.install_screen(SendSMSConfirmationScreen(participant_id=None, custom_message=None, premade_button_text=None), name = "send_sms_confirmation")
