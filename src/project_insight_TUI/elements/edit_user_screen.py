@@ -63,7 +63,8 @@ class EditUserScreen(Screen):
                 update_button = self.query_one("#update_user_button", Button)
                 update_button.disabled = False
             else:
-                user_details_label.update("User not found.")
+                details = "User not found."
+                user_details_label.update(details)
                 
         if event.button.id == "update_user_button":
             participant_id = self.query_one("#participant_id_input").value
