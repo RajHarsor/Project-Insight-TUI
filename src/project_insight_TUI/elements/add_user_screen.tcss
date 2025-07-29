@@ -27,6 +27,7 @@
     align: center middle;
     width: 100%; /* Ensures the group takes full width */
     height: auto; /* Height based on content */
+    offset-y: 1; /* Adjusts vertical position */
 }
 
 #input_fields {
