@@ -7,50 +7,58 @@
     padding-bottom: 1;
 }
 
-
-
-Grid {
-    padding-top: 1;
-    height: auto;
-    width: 100%;
-    grid-size: 2 2;
-    align-horizontal: center;
-    align-vertical: middle;
+#participant_id_input {
+    height: 3;
 }
 
+
 #user_details_label {
-    row-span: 2;
     height: 100;
+    align: center middle;
+    text-align: center;
 }
 
 #field_select {
     display: none;
-    width: 60%;
-    row-span: 1;
-    padding-bottom: 1;
+    width: 40%;
 }
 
 #new_value_input {
     display: none;
-    width: 60%;
-    row-span: 1;
-    padding-bottom: 1;
+    width: 40%;
+    height: 3;
+    padding-top: 1;
+    align: center middle;
+    offset-y: 1;
+}
+
+#new_value_container {
+    align: center middle;
+    width: 100%;
+    height: 9;
 }
 
 #new_details_label {
-    align-horizontal: center;
+    align: center middle;
     text-align: center;
-    width: 100%;
-    padding-top: 0;
     offset-y: 1;
+    offset-x: 2;
 }
 
 #schedule_type_select {
     display: none;
-    width: 60%;
+    width: 40%;
+
 }
 
 #buttons_group {
     offset-y: 10;
     height: 15;
+}
+
+#field_select_container {
+    align: center middle;
+    width: 100%;
+    offset-y: 2;
+    offset-x: 25;
 }

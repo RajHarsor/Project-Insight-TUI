@@ -2,7 +2,7 @@ from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.validation import Function
 from textual.widgets import Input, Label, Button, Select, Header
-from textual.containers import HorizontalGroup, Grid
+from textual.containers import HorizontalGroup, VerticalGroup
 from ..methods.dynamoDB_methods import get_item_from_dynamodb, update_item_in_dynamodb
 from textual import on
 
@@ -13,22 +13,26 @@ class EditUserScreen(Screen):
         yield Header(show_clock=True)  # Show the clock in the header
         yield Label("Enter the Participant ID to edit user details:", id="edit_user_label")
         yield Input(placeholder="Participant ID", id="participant_id_input", type='integer')
-        yield Grid(
+        yield HorizontalGroup(
             # Grid for displaying user details
             Label("", id='user_details_label'),
-            Select(prompt="Select Field to Edit", id="field_select", options=[
-            ("study_start_date", "study_start_date"),
-            ("study_end_date", "study_end_date"),
-            ("phone_number", "phone_number"),
-            ("schedule_type", "schedule_type"),
-            ("lb_link", "lb_link"),
-        ]), Input(placeholder="New Value", id="new_value_input"),
+            VerticalGroup(
+                Select(prompt="Select Field to Edit", id="field_select", options=[
+                ("study_start_date", "study_start_date"),
+                ("study_end_date", "study_end_date"),
+                ("phone_number", "phone_number"),
+                ("schedule_type", "schedule_type"),
+                ("lb_link", "lb_link"),]),
+                Input(placeholder="New Value", id="new_value_input"),
+                id="new_value_container"
+            ),
             # Select for schedule type
             Select(prompt="Select Schedule Type", id="schedule_type_select", options=[
                 ("Early Bird Schedule", "Early Bird Schedule"),
                 ("Standard Schedule", "Standard Schedule"),
                 ('Night Owl Schedule', 'Night Owl Schedule'),
-            ])
+            ]),
+            id="field_select_container"
         )
         yield Label("", id='new_details_label')  # Placeholder for updated user details
         yield HorizontalGroup(
