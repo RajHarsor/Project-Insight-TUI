@@ -13,14 +13,18 @@
 
 
 #user_details_label {
-    height: 100;
     align: center middle;
     text-align: center;
+    height: 10;
+    row-span: 1;
+    column-span: 2;
 }
 
 #field_select {
     display: none;
     width: 40%;
+    row-span: 1;
+    column-span: 1;
 }
 
 #new_value_input {
@@ -29,36 +33,47 @@
     height: 3;
     padding-top: 1;
     align: center middle;
+    row-span: 1;
+    column-span: 1;
     offset-y: 1;
 }
 
 #new_value_container {
     align: center middle;
     width: 100%;
-    height: 9;
+    height: 10;
+    offset-y: -12;
+    offset-x: 35;
 }
 
 #new_details_label {
     align: center middle;
     text-align: center;
-    offset-y: 1;
-    offset-x: 2;
+    offset-y: -12;
+    offset-x: 75;
+    height: 1;
 }
 
 #schedule_type_select {
     display: none;
     width: 40%;
+    offset-y: -15;
+    offset-x: 65;
 
 }
 
 #buttons_group {
-    offset-y: 10;
+    offset-y: -4;
     height: 15;
 }
 
 #field_select_container {
     align: center middle;
     width: 100%;
-    offset-y: 2;
-    offset-x: 25;
+    text-align: center;
+}
+
+Grid {
+    grid-columns: 100;
+    grid-rows: 10;
 }

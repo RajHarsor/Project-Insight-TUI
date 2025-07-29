@@ -2,7 +2,7 @@ from textual.app import ComposeResult
 from textual.screen import Screen
 from textual.validation import Function
 from textual.widgets import Input, Label, Button, Select, Header
-from textual.containers import HorizontalGroup, VerticalGroup
+from textual.containers import HorizontalGroup, VerticalGroup, Grid
 from ..methods.dynamoDB_methods import get_item_from_dynamodb, update_item_in_dynamodb
 from textual import on
 
@@ -13,7 +13,7 @@ class EditUserScreen(Screen):
         yield Header(show_clock=True)  # Show the clock in the header
         yield Label("Enter the Participant ID to edit user details:", id="edit_user_label")
         yield Input(placeholder="Participant ID", id="participant_id_input", type='integer')
-        yield HorizontalGroup(
+        yield Grid(
             # Grid for displaying user details
             Label("", id='user_details_label'),
             VerticalGroup(
