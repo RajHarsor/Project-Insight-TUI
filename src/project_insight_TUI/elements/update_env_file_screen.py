@@ -6,6 +6,7 @@ from textual.containers import HorizontalGroup
 from ..elements.menu_screen import MenuScreen  # Import the main menu screen
 from textual import on
 from tkinter import filedialog
+from ..elements.initialize_screen import InitializeCredentialsScreen
 
 LINES = """aws_access_key_id
 aws_secret_access_key
@@ -86,7 +87,7 @@ class UpdateEnvFileScreen(Screen):
         
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "go-back-button":
-            self.app.pop_screen()
+            self.app.push_screen(InitializeCredentialsScreen())
         elif event.button.id == "main-menu-button":
             self.app.push_screen(MenuScreen())
         elif event.button.id == "choose_path_button":

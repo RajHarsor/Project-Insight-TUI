@@ -4,6 +4,7 @@ from textual.widgets import Label, Static, Header, Button, Select, Input
 from textual.containers import VerticalGroup, HorizontalGroup, Container
 from ..methods.initialize_methods import check_incomplete_env_file, update_env_variable
 from ..elements.menu_screen import MenuScreen
+from ..elements.initialize_screen import InitializeCredentialsScreen
 
 LINES= """aws_access_key_id
 aws_secret_access_key
@@ -40,7 +41,7 @@ class InitializeIncompleteCredentialsScreen(Screen):
         button_id = event.button.id
 
         if button_id == "back_to_menu_button":
-            self.app.pop_screen()
+            self.app.push_screen(InitializeCredentialsScreen())
         elif button_id == "main-menu-button":
             self.app.push_screen(MenuScreen())
         elif button_id == "update_variable_button":
