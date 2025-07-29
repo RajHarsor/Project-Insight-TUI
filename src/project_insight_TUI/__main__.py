@@ -45,7 +45,7 @@ class MainGUI(App):
 app = MainGUI()
 
 def main():
-    app.run()
+    app.run(dev=True)
     
 
 if __name__ == "__main__":

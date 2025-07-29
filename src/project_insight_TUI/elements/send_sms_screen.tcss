@@ -3,7 +3,7 @@
     text-align: center;
     width: 100%;
     offset-y: 1;
-    height: 5%;
+    height: 1;
 }
 
 #participant_search_group {
@@ -18,7 +18,7 @@
     text-align: center;
     width: 30%;
     height: 3;
-    padding-bottom: 0;
+    offset-y: -12;
 }
 
 #search_participant_button {
@@ -27,17 +27,19 @@
     width: 20%;
     height: 3;
     padding-bottom: 0;
+    offset-y: -12;
 }
 
 #participant_search_info {
     align: center middle;
     text-align: center;
     width: 100%;
-    offset-y: -7;
+    offset-y: -30;
+    height: auto;
 }
 
 #message_input_group {
-    offset-y: 1;
+    offset-y: -25;
     align: center middle;
     text-align: center;
 }
@@ -46,7 +48,7 @@
     align: center middle;
     text-align: center;
     width: 100%;
-    offset-y: -3;
+    offset-y: 0;
     display: none;
 
 }
@@ -70,7 +72,7 @@
     height: 5;
     padding-bottom: 0;
     display: none; /* Hidden by default */
-    offset-y: -9; /* Adjusted to align with other elements */
+    offset-y: -20; /* Adjusted to align with other elements */
 }
 
 #premade_button_text {
