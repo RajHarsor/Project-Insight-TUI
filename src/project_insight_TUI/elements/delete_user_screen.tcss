@@ -12,5 +12,5 @@
 }
 
 #buttons_group {
-    offset-y: 4;
+    offset-y: 7;
 }

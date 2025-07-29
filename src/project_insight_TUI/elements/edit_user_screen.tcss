@@ -51,6 +51,6 @@ Grid {
 }
 
 #buttons_group {
-    offset-y: 0;
+    offset-y: 10;
     height: 15;
 }
