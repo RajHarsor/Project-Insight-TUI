@@ -35,11 +35,11 @@
     text-align: center;
     width: 100%;
     offset-y: -30;
-    height: auto;
+    height: 8;
 }
 
 #message_input_group {
-    offset-y: -25;
+    offset-y: -27;
     align: center middle;
     text-align: center;
 }
@@ -48,9 +48,9 @@
     align: center middle;
     text-align: center;
     width: 100%;
-    offset-y: 0;
+    height: 1;
+    offset-y: -27;
     display: none;
-
 }
 
 #custom_message_input {
@@ -59,7 +59,7 @@
     width: 50%;
     height: 6;
     padding-bottom: 0;
-    offset-y: -8; /* Adjusted to align with other elements */
+    offset-y: -16; /* Adjusted to align with other elements */
     display: none; /* Hidden by default */
     text-wrap: wrap; /* Allow text to wrap within the input */
     text-overflow: fold; /* Allow text to wrap within the input */
@@ -69,10 +69,9 @@
     align: center middle;
     text-align: center;
     width: 50%;
-    height: 5;
     padding-bottom: 0;
     display: none; /* Hidden by default */
-    offset-y: -20; /* Adjusted to align with other elements */
+    offset-y: -16; /* Adjusted to align with other elements */
 }
 
 #premade_button_text {
@@ -86,5 +85,5 @@
     align: center middle;
     text-align: center;
     width: 100%;
-    offset-y: -14;
+    offset-y: -62;
 }
