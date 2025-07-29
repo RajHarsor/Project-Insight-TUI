@@ -29,3 +29,6 @@
     height: auto; /* Height based on content */
 }
 
+#input_fields {
+    offset-y: 0;
+}

@@ -62,6 +62,7 @@ Night Owl Schedule""".splitlines()
             Input(placeholder="Enter Phone Number (+1XXXXXXXXXX)", id="phone_number_input", type='text', validators=[Function(lambda x: len(x) == 12 and x[0:2] == '+1' and x[2:].isdigit(), "Phone number must be in +1XXXXXXXXXX format")]),
             Input(placeholder="Enter Leaderboard Link", id="lb_link_input", type='text', validators=[Function(lambda x: len(x) > 0, "LB Link cannot be empty")]),
             Select(((line, line) for line in SCHEDULE_OPTIONS), allow_blank=True, id="schedule_select", prompt="Select Schedule"),
+            id="input_fields"
         )
         yield Container(
             Pretty("", id="validation_result"),
