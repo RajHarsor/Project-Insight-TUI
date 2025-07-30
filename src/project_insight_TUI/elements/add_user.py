@@ -21,9 +21,8 @@ class AddUserScreen(Screen):
             #study_end_date = self.query_one("#study_end_date_input").value
             # Convert study start into datetime object
             study_start_date_dt = datetime.datetime.strptime(study_start_date, "%Y-%m-%d")
-            
-            # Calculate end day 14 days after start date
-            study_end_date_dt = study_start_date_dt + datetime.timedelta(days=14)
+            # Calculate end day 13 days after start date
+            study_end_date_dt = study_start_date_dt + datetime.timedelta(days=13)
             # Convert study end date into string format
             study_end_date = study_end_date_dt.strftime("%Y-%m-%d")
 
