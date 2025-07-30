@@ -43,7 +43,7 @@ class UpdateEnvFileScreen(Screen):
             id="update_button_group"
         )
         yield HorizontalGroup(
-            Button("Go Back", id="go-back-button"),
+            Button("Go Back", id="go-back-button", disabled=True),
             Button("Main Menu", id="main-menu-button"),
             id="button-panel"
         )

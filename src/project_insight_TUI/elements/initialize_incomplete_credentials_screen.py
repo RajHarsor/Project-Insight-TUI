@@ -30,7 +30,7 @@ class InitializeIncompleteCredentialsScreen(Screen):
         yield Label("", id="update_status_label")
         
         yield HorizontalGroup(
-            Button("Go Back", id="back_to_menu_button"),
+            Button("Go Back", id="back_to_menu_button", disabled=True),
             Button("Back to Main Menu", id="main-menu-button"),
             Button("Update Variable", id="update_variable_button"),
             id="action_buttons"
