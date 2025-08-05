@@ -1,4 +1,4 @@
-from .__main__ import app
+from .__main__ import main, MainGUI  # Import the app instance and main function from __main__.py
 
 # src/project_insight_tui/__init__.py
 __version__ = "0.3.1"

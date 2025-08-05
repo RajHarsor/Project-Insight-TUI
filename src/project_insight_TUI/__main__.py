@@ -41,12 +41,11 @@ class MainGUI(App):
         self.install_screen(SendSMSConfirmationScreen(participant_id=None, custom_message=None, premade_button_text=None), name = "send_sms_confirmation")
         
         self.push_screen("menu")
-
-app = MainGUI()
+        
 
 def main():
+    app = MainGUI()
     app.run()
-    
 
 if __name__ == "__main__":
     main()
