@@ -3,17 +3,20 @@ from textual.screen import Screen
 from textual.widgets import Button, Label
 from textual.containers import HorizontalGroup
 from ..elements.menu_screen import MenuScreen
+from ..methods.dynamoDB_methods import send_text_message
 
 class SendSMSConfirmationScreen(Screen):
     def __init__(
         self,
         participant_id: str,
         custom_message: str,
+        phone_number: str,
         premade_button_text: str
     ):
         super().__init__()
         self.participant_id = participant_id
         self.custom_message = custom_message
+        self.phone_number = phone_number
         self.premade_button_text = premade_button_text
 
     # Path to the CSS file for styling
@@ -37,7 +40,13 @@ class SendSMSConfirmationScreen(Screen):
     def on_button_pressed(self, event: Button.Pressed) -> None:
         button_id = event.button.id
         if button_id == "confirm_button":
-            # TODO Implement the logic to send the SMS with data from sns.publish. Check for failures too when receiving response
+            success = send_text_message(
+                phone_number=self.phone_number,
+                message=self.custom_message if self.custom_message else self.premade_button_text
+            )
+            if not success:
+                self.query_one("#status_message").update("Failed to send SMS. Please check your credentials and try again.")
+                return
             # Disable confirm button to prevent multiple submissions
             self.query_one("#confirm_button").disabled = True
             self.query_one("#cancel_button").disabled= True

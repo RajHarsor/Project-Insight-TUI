@@ -102,13 +102,14 @@ class SendSMSScreen(Screen):
         elif button_id == "send_sms_button":
             # Send Participant # and the full message to the SendSMSConfirmationScreen
             participant_id = self.query_one("#participant_id_input", Input).value
+            phone_number = self.user_data.get('phone_number', None)
             custom_message_input = self.query_one("#custom_message_input", TextArea).text
             if custom_message_input.strip() == "":
                 custom_message_input = None
             premade_button_text = str(self.query_one("#premade_button_text", Label).renderable)
             if premade_button_text.strip() == "":
                 premade_button_text = None
-            self.app.push_screen(SendSMSConfirmationScreen(participant_id=participant_id, custom_message=custom_message_input, premade_button_text=premade_button_text))
+            self.app.push_screen(SendSMSConfirmationScreen(participant_id=participant_id, custom_message=custom_message_input, premade_button_text=premade_button_text, phone_number=phone_number))
 
     @on(Select.Changed)
     def on_message_type_changed(self, event: Select.Changed) -> None:

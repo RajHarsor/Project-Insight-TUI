@@ -77,3 +77,25 @@ def delete_item_from_dynamodb(participant_id):
 
     # Implement logic to delete item from DynamoDB
     table.delete_item(Key={"participant_id": participant_id})
+
+def send_text_message(phone_number, message):
+    env_vars = get_env_variables()
+
+    Session = boto3.Session(
+        aws_access_key_id=env_vars['aws_access_key_id'],
+        aws_secret_access_key=env_vars['aws_secret_access_key'],
+        region_name=env_vars['region']
+    )
+
+    sns = Session.client('sns')
+
+    try:
+    # Implement logic to send SMS using SNS
+        sns.publish(
+            PhoneNumber=phone_number,
+            Message=message
+        )
+        return True
+    except Exception as e:
+        print(f"Failed to send SMS: {e}")
+        return False

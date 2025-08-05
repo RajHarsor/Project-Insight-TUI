@@ -38,7 +38,7 @@ class MainGUI(App):
         self.install_screen(CheckIndividualComplianceScreen(), name = "check_individual_compliance")
         
         self.install_screen(SendSMSScreen(), name = "send_test_sms")
-        self.install_screen(SendSMSConfirmationScreen(participant_id=None, custom_message=None, premade_button_text=None), name = "send_sms_confirmation")
+        self.install_screen(SendSMSConfirmationScreen(participant_id=None, custom_message=None, premade_button_text=None, phone_number=None), name = "send_sms_confirmation")
         
         self.push_screen("menu")
         
