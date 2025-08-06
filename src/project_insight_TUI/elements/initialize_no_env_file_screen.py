@@ -91,7 +91,7 @@ class InitializeNoEnvFileScreen(Screen):
             create_env_file(aws_access_key_id, aws_secret_access_key, table_name,
                             self.qualtrics_survey_1a_path, self.qualtrics_survey_1b_path,
                             self.qualtrics_survey_2_path, self.qualtrics_survey_3_path,
-                            self.qualtrics_survey_4_path)
+                            self.qualtrics_survey_4_path, self.participant_db)
             self.update_survey_status("Environment file created successfully!")
         elif button_id == "back_to_menu_button":
             self.app.pop_screen()
