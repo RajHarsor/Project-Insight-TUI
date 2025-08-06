@@ -14,12 +14,9 @@ class GenerateReportScreen(Screen):
         yield HorizontalGroup(
             Button(label="Generate Report", id="generate_report_button"),
             Button(label="Check Individual Compliance", id="check_individual_compliance_button"),
-            id="action_buttons"
-        )
-        yield HorizontalGroup(
-            Button(label="Main Menu", id="main_menu_button"),
+            Button(label="Back to Main Menu", id="back_to_main_menu_button"),
             Button(label="Exit Application", id="exit_button"),
-            id="navigation_buttons"
+            id="action_buttons"
         )
         yield Footer()
         

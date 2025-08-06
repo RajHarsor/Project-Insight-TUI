@@ -49,7 +49,8 @@ def create_env_file(aws_access_key_id: str,
                     qualtrics_survey_1b_path: str = None,
                     qualtrics_survey_2_path: str = None,
                     qualtrics_survey_3_path: str = None,
-                    qualtrics_survey_4_path: str = None):
+                    qualtrics_survey_4_path: str = None,
+                    participant_db: str = None):
     # Create a .env file with the provided environment variables
     with open('.env', 'w') as f:
         f.write(f"aws_access_key_id={aws_access_key_id}\n")
@@ -68,6 +69,8 @@ def create_env_file(aws_access_key_id: str,
             f.write(f"qualtrics_survey_3_path={qualtrics_survey_3_path}\n")
         if qualtrics_survey_4_path is not None:
             f.write(f"qualtrics_survey_4_path={qualtrics_survey_4_path}\n")
+        if participant_db is not None:
+            f.write(f"participant_db={participant_db}\n")
             
 def check_incomplete_env_file():
     """See what required variables are missing from the .env file."""

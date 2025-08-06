@@ -3,30 +3,38 @@
     width: 100%;
     text-align: center;
     text-style: bold underline;
+    offset-y: 0;
+    display: block;
+    padding-bottom: 1;
+    height: 2;
 }
 
 #current_env_vars {
     border: heavy blue;
-    height: 15;
+    height: 27;
     width: 50%;
-    text-overflow: clip;
+    text-overflow: fold;
+    padding-bottom: 1;
 }
 
 #update_result {
     border: heavy purple;
-    height: 15;
+    height: 27;
     width: 50%;
-    text-overflow: clip;
+    text-overflow: fold;
 }
 #variable_input_group {
     height: 15%;
     width: 100%;
-    offset-y: -25;
+    padding-top: 1;
+    padding-bottom: 1;
 }
 
 
 #update_result {
     border: heavy;
+    padding-bottom: 1;
+    width: 50%;
 }
 
 #env_var_select {
@@ -39,7 +47,6 @@
     width: 88%;
     text-align: center;
     align: center middle;
-    offset-y: 0;
     border: none;
     height: 5;
     padding-bottom: 0;
@@ -50,7 +57,6 @@
     align: center middle;
     text-align: center;
     width: 100%;
-    offset-y: -25;
     height: 5;
 }
 
@@ -76,10 +82,11 @@
 }
 
 #button-panel {
-    offset-y: -23;
     height: 15;
 }
 
 #env_vars_display {
-    offset-y: -12;
+    padding-top: 1;
+    padding-bottom: 1;
+    height: 29;
 }

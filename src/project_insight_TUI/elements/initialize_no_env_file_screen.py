@@ -17,6 +17,7 @@ class InitializeNoEnvFileScreen(Screen):
         self.qualtrics_survey_2_path = None
         self.qualtrics_survey_3_path = None
         self.qualtrics_survey_4_path = None
+        self.participant_db = None
     
     def compose(self) -> ComposeResult:
         yield Header(show_clock=True) 
@@ -33,6 +34,7 @@ class InitializeNoEnvFileScreen(Screen):
             Button("Add Qualtrics Survey 2 Path (Optional)", id="add_survey_2_button"),
             Button("Add Qualtrics Survey 3 Path (Optional)", id="add_survey_3_button"),
             Button("Add Qualtrics Survey 4 Path (Optional)", id="add_survey_4_button"),
+            Button("Add Participant Database Path (Optional)", id="add_participant_db_button"),
             id="survey_path_buttons"
         )
         yield VerticalGroup(
@@ -79,6 +81,11 @@ class InitializeNoEnvFileScreen(Screen):
             aws_access_key_id = self.query_one("#aws_access_key_id_input").value
             aws_secret_access_key = self.query_one("#aws_secret_access_key_input").value
             table_name = self.query_one("#table_name_input").value
+        elif button_id == "add_participant_db_button":
+            path = filedialog.askopenfilename(title="Select Participant Database Path")
+            if path:
+                self.participant_db = path
+                self.update_survey_status("Participant database path selected")
 
             # Create the .env file with the provided values and stored paths
             create_env_file(aws_access_key_id, aws_secret_access_key, table_name,

@@ -15,11 +15,12 @@ qualtrics_survey_1a_path
 qualtrics_survey_1b_path
 qualtrics_survey_2_path
 qualtrics_survey_3_path
-qualtrics_survey_4_path""".splitlines()
+qualtrics_survey_4_path
+participant_db_path""".splitlines()
 
 CREDENTIAL_VARS = ["aws_access_key_id", "aws_secret_access_key", "region", "table_name"]
 PATH_VARS = ["qualtrics_survey_1a_path", "qualtrics_survey_1b_path", "qualtrics_survey_2_path", 
-            "qualtrics_survey_3_path", "qualtrics_survey_4_path"]
+            "qualtrics_survey_3_path", "qualtrics_survey_4_path", "participant_db_path"]
 
 class UpdateEnvFileScreen(Screen):
     CSS_PATH = "update_env_file_screen.tcss"  # Path to the CSS file for styling
