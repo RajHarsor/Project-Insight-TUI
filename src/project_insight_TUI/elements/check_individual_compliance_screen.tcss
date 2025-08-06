@@ -1,0 +1,11 @@
+#compliance_message {
+    text-align: center;
+    align: center middle;
+    width: 100%;
+}
+
+#start_end_date {
+    text-align: center;
+    align: center middle;
+    width: 100%;
+}
