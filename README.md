@@ -53,8 +53,6 @@ pip3 uninstall project-insight-tui
 - [ ] Implement CloudWatch logs viewing.
 - [ ] Implement Cloudwatch alarms (AWS Backend).
 
-## License
-This project is licensed under the MIT License.
 
 ## Issues and Contact
 If you encounter any issues or have questions, feel free to open an issue on the [GitHub repository](https://github.com/RajHarsor/Project-Insight-TUI/issues) and/or contact harsora@rowan.edu.
