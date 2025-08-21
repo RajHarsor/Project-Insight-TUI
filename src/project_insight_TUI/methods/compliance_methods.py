@@ -6,7 +6,16 @@ import datetime
 import pytz
 import numpy as np
 
+
 def get_participant_variables(participant_id: str):
+    env_vars = get_env_variables()
+    
+    Session = boto3.Session(
+        aws_access_key_id=env_vars['aws_access_key_id'],
+        aws_secret_access_key=env_vars['aws_secret_access_key'],
+        region_name=env_vars['region']
+    )
+    
     # Get the needed variables
     dynamodb = Session.resource('dynamodb')
     table = dynamodb.Table(env_vars['table_name'])
@@ -39,6 +48,14 @@ def get_log_events(schedule_type, date_range, study_start_date_converted, study_
                                '/aws/lambda/night_owl_schedule_message4']
     else:
         raise ValueError("Invalid schedule type provided.")
+    
+    env_vars = get_env_variables()
+    
+    Session = boto3.Session(
+        aws_access_key_id=env_vars['aws_access_key_id'],
+        aws_secret_access_key=env_vars['aws_secret_access_key'],
+        region_name=env_vars['region']
+    )
     
     # Create a CloudWatch Logs client
     cloudwatch_logs = Session.client('logs')
@@ -99,12 +116,13 @@ def get_log_events(schedule_type, date_range, study_start_date_converted, study_
 
 def generate_compliance_tables(participant_id: str):
     env_vars = get_env_variables()
+    print(env_vars)
     
     # Initialize a session using your AWS credentials
     Session = boto3.Session(
         aws_access_key_id=env_vars['aws_access_key_id'],
         aws_secret_access_key=env_vars['aws_secret_access_key'],
-        region_name=env_vars['region_name']
+        region_name=env_vars['region']
     )
     
     # Load in Survey CSV Files & Clean Times
@@ -418,7 +436,7 @@ def generate_compliance_tables(participant_id: str):
             row[3]   # Survey 4
         )
         compliance_rows.append(compliance_row)
-        compliance_rows.insert(0, ("Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
+    compliance_rows.insert(0, ("Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
 
     send_time_rows = []
     for i in range(14):
@@ -433,6 +451,6 @@ def generate_compliance_tables(participant_id: str):
             times[3] if len(times) > 3 else None,
         )
         send_time_rows.append(row)
-        send_time_rows.insert(0, ("Date", "Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
+    send_time_rows.insert(0, ("Date", "Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
         
     return compliance_rows, send_time_rows

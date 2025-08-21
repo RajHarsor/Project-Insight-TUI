@@ -5,6 +5,7 @@ from textual.widgets import Label, Button, Footer, Header, Input, DataTable
 from ..elements.menu_screen import MenuScreen
 from ..methods.dynamoDB_methods import get_item_from_dynamodb
 import datetime
+from ..methods.compliance_methods import generate_compliance_tables
 
 # First column should be date_range that we calculated
 
@@ -19,6 +20,9 @@ class CheckIndividualComplianceScreen(Screen):
         yield Label("", id="start_end_date")
         yield Label("", id="compliance_result")
         # Create Datatable with 14 columns and 5 rows
+        yield Label("Send Times:", id="send_times_label")
+        yield DataTable(id="send_times_table")
+        yield Label("Compliance Data Table:", id="compliance_data_label")
         yield DataTable(id="compliance_data_table")
         
         yield HorizontalGroup(
@@ -37,7 +41,8 @@ class CheckIndividualComplianceScreen(Screen):
                 start_date = user_data.get("study_start_date", "N/A")
                 end_date = user_data.get("study_end_date", "N/A")
                 self.query_one("#start_end_date", Label).update(f"Study Start Date: {start_date} | Study End Date: {end_date}")
-                
+                compliance_rows, send_time_rows = generate_compliance_tables(participant_id)
+                print(compliance_rows, send_time_rows)
                 # Convert start_date and end_date into dateTime objects
                 try:
                     start_date_obj = datetime.datetime.strptime(start_date, "%Y-%m-%d")
@@ -45,20 +50,21 @@ class CheckIndividualComplianceScreen(Screen):
                 except ValueError:
                     self.query_one("#compliance_result", Label).update("Invalid date format in user data.")
                     return
-                # Make a list of dates between start_date and end_date (inclusive)
-                date_range = [start_date_obj + datetime.timedelta(days=i) for i in range((
-                    end_date_obj - start_date_obj).days + 1)]
-                date_strings = [d.strftime("%Y-%m-%d") for d in date_range]
-
                 
-                data_table = self.query_one("#compliance_data_table", DataTable)
-                data_table.clear()
-                data_table.add_columns(*date_strings)  # Set columns as dates
-                for _ in range(4):
-                    data_table.add_row(*[""] * len(date_strings))
+                # Table of send_time_rows
+                data_table = self.query_one("#send_times_table", DataTable)
+                data_table.add_columns(*send_time_rows[0])
+                for row in send_time_rows[1:]:
+                    data_table.add_row(*row)
+                
+                data_table2 = self.query_one("#compliance_data_table", DataTable)
+                data_table2.add_columns(*compliance_rows[0])
+                for row in compliance_rows[0:]:
+                    data_table2.add_row(*row)
                 
                 # Show compliance data table since it's hidden by default
                 data_table.styles.display = "block"  # Show the table
+                data_table2.styles.display = "block"
                 
                 
         elif event.button.id == "main_menu_button":

@@ -43,6 +43,9 @@ class MainGUI(App):
         self.push_screen("menu")
         
 
+def app():
+    return MainGUI()
+
 def main():
     app = MainGUI()
     app.run()
@@ -50,5 +53,3 @@ def main():
 if __name__ == "__main__":
     main()
 
-def app():
-    return MainGUI()
