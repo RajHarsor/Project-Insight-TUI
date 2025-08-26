@@ -11,13 +11,54 @@
 }
 
 #compliance_data_table {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
     display: none; /* Initially hidden */
+    align: center middle;
+    offset-x: -2;
+}
+
+#compliance_key {
+    width: auto;
+    height: auto;
+    display: none; /* Initially hidden */
+    offset-x: 2;
+}
+
+#compliance_data_label {
+    padding-top: 1;
+    padding-bottom: 1;
+    width: 100%;
+    text-align: center;
+    align: center middle;
 }
 
 #send_times_table {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
     display: none; /* Initially hidden */
+}
+
+#send_times_label {
+    padding-top: 1;
+    padding-bottom: 1;
+    width: 100%;
+    text-align: center;
+    align: center middle;
+}
+
+#compliance_tables {
+    padding-top: 1;
+    height: auto;
+}
+
+#send_times_group {
+    align: center middle;
+    padding-top: 1;
+    height: auto;
+}
+
+#action_buttons {
+    padding-top: 5;
+    height: auto;
 }

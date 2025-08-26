@@ -437,6 +437,8 @@ def generate_compliance_tables(participant_id: str):
         )
         compliance_rows.append(compliance_row)
     compliance_rows.insert(0, ("Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
+    
+    # TODO: Add compliance calculations
 
     send_time_rows = []
     for i in range(14):
@@ -452,5 +454,5 @@ def generate_compliance_tables(participant_id: str):
         )
         send_time_rows.append(row)
     send_time_rows.insert(0, ("Date", "Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
-        
-    return compliance_rows, send_time_rows
+    
+    return compliance_rows, send_time_rows, ID
