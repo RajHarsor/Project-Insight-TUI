@@ -9,6 +9,15 @@ from ..methods.compliance_methods import generate_compliance_tables
 
 # First column should be date_range that we calculated
 
+compliance_key_rows = [
+    ("Key", "Description"),
+    ("✓ SR", "Single Response for day on Time"),
+    ("✗ SR", "Single Response for day but Late"),
+    ("✓ MR", "Multiple Responses for day but one on Time"),
+    ("✗ MR", "Multiple Responses for day but none on Time"),
+    ("NR", "No Response on this survey for day")
+]
+
 
 class CheckIndividualComplianceScreen(Screen):
     CSS_PATH = "check_individual_compliance_screen.tcss"
@@ -21,9 +30,16 @@ class CheckIndividualComplianceScreen(Screen):
         yield Label("", id="compliance_result")
         # Create Datatable with 14 columns and 5 rows
         yield Label("Send Times:", id="send_times_label")
-        yield DataTable(id="send_times_table")
-        yield Label("Compliance Data Table:", id="compliance_data_label")
-        yield DataTable(id="compliance_data_table")
+        yield HorizontalGroup(
+            DataTable(id=""),
+            id="send_times_group"
+        )
+        yield Label("", id="compliance_data_label")
+        yield HorizontalGroup(
+            DataTable(id="compliance_data_table"),
+            DataTable(id='compliance_key'),
+            id="compliance_tables"
+        )
         
         yield HorizontalGroup(
             Button(label="Check Compliance", id="check_compliance_button"),
@@ -40,8 +56,8 @@ class CheckIndividualComplianceScreen(Screen):
             if user_data:
                 start_date = user_data.get("study_start_date", "N/A")
                 end_date = user_data.get("study_end_date", "N/A")
-                self.query_one("#start_end_date", Label).update(f"Study Start Date: {start_date} | Study End Date: {end_date}")
-                compliance_rows, send_time_rows = generate_compliance_tables(participant_id)
+                compliance_rows, send_time_rows, ID = generate_compliance_tables(participant_id)
+                self.query_one("#start_end_date", Label).update(f"Study Start Date: {start_date} | Study End Date: {end_date} | Participant Initials: {ID}")
                 print(compliance_rows, send_time_rows)
                 # Convert start_date and end_date into dateTime objects
                 try:
@@ -59,12 +75,20 @@ class CheckIndividualComplianceScreen(Screen):
                 
                 data_table2 = self.query_one("#compliance_data_table", DataTable)
                 data_table2.add_columns(*compliance_rows[0])
-                for row in compliance_rows[0:]:
+                for row in compliance_rows[1:]:
                     data_table2.add_row(*row)
+                
+                data_table3 = self.query_one("#compliance_key", DataTable)
+                data_table3.add_columns(*compliance_key_rows[0])
+                for row in compliance_key_rows[1:]:
+                    data_table3.add_row(*row)
                 
                 # Show compliance data table since it's hidden by default
                 data_table.styles.display = "block"  # Show the table
                 data_table2.styles.display = "block"
+                data_table3.styles.display = "block"
+                self.query_one("#send_times_label", Label).update("Send Times:")
+                self.query_one("#compliance_data_label", Label).update("Compliance Data:")
                 
                 
         elif event.button.id == "main_menu_button":
