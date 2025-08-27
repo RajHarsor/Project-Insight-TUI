@@ -31,7 +31,7 @@ class CheckIndividualComplianceScreen(Screen):
         # Create Datatable with 14 columns and 5 rows
         yield Label("Send Times:", id="send_times_label")
         yield HorizontalGroup(
-            DataTable(id=""),
+            DataTable(id="send_times_table"),
             id="send_times_group"
         )
         yield Label("", id="compliance_data_label")
