@@ -4,7 +4,7 @@ from textual.containers import HorizontalGroup
 from textual.widgets import Label, Button, Footer, Header
 from ..elements.menu_screen import MenuScreen
 from ..elements.check_individual_compliance_screen import CheckIndividualComplianceScreen
-
+from ..methods.initialize_methods import get_env_variables
 class GenerateReportScreen(Screen):
     CSS_PATH = "generate_report_screen.tcss"
 
@@ -19,6 +19,22 @@ class GenerateReportScreen(Screen):
             id="action_buttons"
         )
         yield Footer()
+    
+    def on_show(self) -> None:
+        env_vars = get_env_variables()
+        print(env_vars)
+        
+        # Check if they have the required variables 
+        PATH_VARS = ["qualtrics_survey_1a_path", "qualtrics_survey_1b_path", "qualtrics_survey_2_path", 
+            "qualtrics_survey_3_path", "qualtrics_survey_4_path", "participant_db_path"]
+        missing_vars = [var for var in PATH_VARS if var not in env_vars or not env_vars[var]]
+        if missing_vars:
+            self.query_one("#report_message", Label).update(f"Missing environment variables: {', '.join(missing_vars)}. Please update them in the Update Env File section.")
+            self.query_one("#generate_report_button", Button).disabled = True
+            self.query_one("#check_individual_compliance_button", Button).disabled = True
+        else:
+            self.query_one("#generate_report_button", Button).disabled = False
+            self.query_one("#check_individual_compliance_button", Button).disabled = False
         
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "generate_report_button":

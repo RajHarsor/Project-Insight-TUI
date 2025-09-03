@@ -29,7 +29,7 @@ class CheckIndividualComplianceScreen(Screen):
         yield Label("", id="start_end_date")
         yield Label("", id="compliance_result")
         # Create Datatable with 14 columns and 5 rows
-        yield Label("Send Times:", id="send_times_label")
+        yield Label("", id="send_times_label")
         yield HorizontalGroup(
             DataTable(id="send_times_table"),
             id="send_times_group"
@@ -52,12 +52,18 @@ class CheckIndividualComplianceScreen(Screen):
         if event.button.id == "check_compliance_button":
             # Query the input field for the participant ID
             participant_id = self.query_one("#user_input", Input).value
+            
             user_data = get_item_from_dynamodb(participant_id)
+            print(user_data)
+            
             if user_data:
                 start_date = user_data.get("study_start_date", "N/A")
                 end_date = user_data.get("study_end_date", "N/A")
-                compliance_rows, send_time_rows, ID = generate_compliance_tables(participant_id)
-                self.query_one("#start_end_date", Label).update(f"Study Start Date: {start_date} | Study End Date: {end_date} | Participant Initials: {ID}")
+                compliance_rows, send_time_rows, ID, message, current_comp, total_comp = generate_compliance_tables(participant_id)
+                # Update the compliance result label
+                if message:
+                    self.query_one("#compliance_result", Label).update(message)
+                self.query_one("#start_end_date", Label).update(f"Study Start Date: {start_date} | Study End Date: {end_date} | Participant Initials: {ID} | Current Compliance = (✓ SR + ✓ MR) / # of expected surveys: {current_comp} | Total Compliance = (✓ SR + ✓ MR)/56 : {total_comp}")
                 print(compliance_rows, send_time_rows)
                 # Convert start_date and end_date into dateTime objects
                 try:
@@ -68,28 +74,28 @@ class CheckIndividualComplianceScreen(Screen):
                     return
                 
                 # Table of send_time_rows
-                data_table = self.query_one("#send_times_table", DataTable)
-                data_table.add_columns(*send_time_rows[0])
-                for row in send_time_rows[1:]:
-                    data_table.add_row(*row)
+                if send_time_rows is not None:
+                    data_table = self.query_one("#send_times_table", DataTable)
+                    data_table.add_columns(*send_time_rows[0])
+                    for row in send_time_rows[1:]:
+                        data_table.add_row(*row)
+                    data_table.styles.display = "block"
                 
-                data_table2 = self.query_one("#compliance_data_table", DataTable)
-                data_table2.add_columns(*compliance_rows[0])
-                for row in compliance_rows[1:]:
-                    data_table2.add_row(*row)
+                if compliance_rows is not None:
+                    data_table2 = self.query_one("#compliance_data_table", DataTable)
+                    data_table2.add_columns(*compliance_rows[0])
+                    for row in compliance_rows[1:]:
+                        data_table2.add_row(*row)
+                    data_table2.styles.display = "block"
                 
-                data_table3 = self.query_one("#compliance_key", DataTable)
-                data_table3.add_columns(*compliance_key_rows[0])
-                for row in compliance_key_rows[1:]:
-                    data_table3.add_row(*row)
-                
-                # Show compliance data table since it's hidden by default
-                data_table.styles.display = "block"  # Show the table
-                data_table2.styles.display = "block"
-                data_table3.styles.display = "block"
-                self.query_one("#send_times_label", Label).update("Send Times:")
-                self.query_one("#compliance_data_label", Label).update("Compliance Data:")
-                
+                if send_time_rows is not None or compliance_rows is not None:
+                    data_table3 = self.query_one("#compliance_key", DataTable)
+                    data_table3.add_columns(*compliance_key_rows[0])
+                    for row in compliance_key_rows[1:]:
+                        data_table3.add_row(*row)
+                    data_table3.styles.display = "block"
+            else:
+                self.query_one("#compliance_result", Label).update("User not found. Please check the participant ID.")
                 
         elif event.button.id == "main_menu_button":
             self.app.push_screen(MenuScreen())

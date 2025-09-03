@@ -1,0 +1,7 @@
+#report_message {
+    width: 100%;
+    align: center middle;
+    text-align: center;
+    padding-bottom: 1;
+    padding-top: 1;
+}

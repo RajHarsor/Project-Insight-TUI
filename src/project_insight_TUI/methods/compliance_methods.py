@@ -34,8 +34,8 @@ def get_log_events(schedule_type, date_range, study_start_date_converted, study_
     if schedule_type == "Early Bird Schedule":
         log_group_name_list = ['/aws/lambda/early_bird_schedule_message1', 
                                '/aws/lambda/early_bird_schedule_message2',
-                               '/aws/lambda/early_bird_schedule_message3'
-                               'aws/lambda/early_bird_schedule_message4']
+                               '/aws/lambda/early_bird_schedule_message3',
+                               '/aws/lambda/early_bird_schedule_message4']
     elif schedule_type == "Standard Schedule":
         log_group_name_list = ['/aws/lambda/standard_schedule_message1', 
                                '/aws/lambda/standard_schedule_message2',
@@ -126,14 +126,21 @@ def generate_compliance_tables(participant_id: str):
     )
     
     # Load in Survey CSV Files & Clean Times
-    db_df = pl.read_csv(env_vars.get("participant_db_path"))
-    survey_1a_df = pl.read_csv(env_vars.get("qualtrics_survey_1a_path"), schema_overrides={"Date/Time": str})
-    survey_1b_df = pl.read_csv(env_vars.get("qualtrics_survey_1b_path"), schema_overrides={"Date/Time": str})
-    survey_2_df = pl.read_csv(env_vars.get("qualtrics_survey_2_path"), schema_overrides={"Date/Time": str})
-    survey_3_df = pl.read_csv(env_vars.get("qualtrics_survey_3_path"), schema_overrides={"Date/Time": str})
-    survey_4_df = pl.read_csv(env_vars.get("qualtrics_survey_4_path"), schema_overrides={"Date/Time": str})
-    
-    survey_list = [survey_1a_df, survey_1b_df, survey_2_df, survey_3_df, survey_4_df]
+    try:
+        db_df = pl.read_csv(env_vars.get("participant_db_path"))
+        survey_1a_df = pl.read_csv(env_vars.get("qualtrics_survey_1a_path"), schema_overrides={"Date/Time": str})
+        survey_1b_df = pl.read_csv(env_vars.get("qualtrics_survey_1b_path"), schema_overrides={"Date/Time": str})
+        survey_2_df = pl.read_csv(env_vars.get("qualtrics_survey_2_path"), schema_overrides={"Date/Time": str})
+        survey_3_df = pl.read_csv(env_vars.get("qualtrics_survey_3_path"), schema_overrides={"Date/Time": str})
+        survey_4_df = pl.read_csv(env_vars.get("qualtrics_survey_4_path"), schema_overrides={"Date/Time": str})
+        
+        survey_list = [survey_1a_df, survey_1b_df, survey_2_df, survey_3_df, survey_4_df]
+        
+        print("CSV files loaded successfully.")
+    except Exception as e:
+        print(f"Error loading CSV files: {e}")
+        message = f"Error loading CSV files: {e}. Please check if you have Google Drive open and are logged in."
+        return None, None, None, message, None, None
     
     for idx, survey in enumerate(survey_list):
         survey = survey.with_columns(
@@ -178,8 +185,14 @@ def generate_compliance_tables(participant_id: str):
     send_time_dict = {date: [datetime.datetime.strptime(time, "%H:%M:%S") if time else None for time in times] for date, times in dict.items()}
 
     # ID Number Identification
-    participant_row = db_df.filter(pl.col("Participant ID #") == int(participant_id))
-    ID = str(participant_row["ID"][0])
+    try:
+        participant_row = db_df.filter(pl.col("Participant ID #") == int(participant_id))
+        ID = str(participant_row["ID"][0])
+        print(f"Participant ID {participant_id} corresponds to initials: {ID}")
+    except Exception as e:
+        print(f"Error retrieving participant initials: {e}")
+        message = f"Error retrieving participant initials: {e}"
+        return None, None, None, message, None, None
     
     # Setup for checks
     list_of_len = list(range(1, len(date_range) + 1))
@@ -424,6 +437,17 @@ def generate_compliance_tables(participant_id: str):
                         dif_array[responses - 1][survey_index] = "✗ SR"
     print(dif_array)
     
+    # Count how many ✓ SR and ✓ MR
+    count_mr = np.sum(dif_array == "✓ MR")
+    count_sr = np.sum(dif_array == "✓ SR")
+    total_comp = count_mr + count_sr / 56
+    print("Total Completion Rate (✓ MR + ✓ SR):", total_comp)
+    
+    #current_comp should be the total number of non-zero entries in dif_array
+    current_comp = (count_mr + count_sr) / np.sum(dif_array != 0)
+    print("Current Completion Rate (✓ MR + ✓ SR) / Total Sent:", current_comp)
+    
+        
     # Final rows to send to the frontend
     compliance_rows = []
     for i in range(len(dif_array)):
@@ -438,8 +462,6 @@ def generate_compliance_tables(participant_id: str):
         compliance_rows.append(compliance_row)
     compliance_rows.insert(0, ("Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
     
-    # TODO: Add compliance calculations
-
     send_time_rows = []
     for i in range(14):
         date = date_range[i]
@@ -454,5 +476,6 @@ def generate_compliance_tables(participant_id: str):
         )
         send_time_rows.append(row)
     send_time_rows.insert(0, ("Date", "Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
+    message = "Success"
     
-    return compliance_rows, send_time_rows, ID
+    return compliance_rows, send_time_rows, ID, message, current_comp, total_comp
