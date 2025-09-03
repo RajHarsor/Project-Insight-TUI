@@ -11,10 +11,10 @@ from ..methods.compliance_methods import generate_compliance_tables
 
 compliance_key_rows = [
     ("Key", "Description"),
-    ("✓ SR", "Single Response for day on Time"),
-    ("✗ SR", "Single Response for day but Late"),
-    ("✓ MR", "Multiple Responses for day but one on Time"),
-    ("✗ MR", "Multiple Responses for day but none on Time"),
+    ("✓ SR", "Single Response for day on time"),
+    ("✗ SR", "Single Response for day but late"),
+    ("✓ MR", "Multiple Responses for day but at least one on time"),
+    ("✗ MR", "Multiple Responses for day but none on time"),
     ("NR", "No Response on this survey for day")
 ]
 
@@ -63,7 +63,7 @@ class CheckIndividualComplianceScreen(Screen):
                 # Update the compliance result label
                 if message:
                     self.query_one("#compliance_result", Label).update(message)
-                self.query_one("#start_end_date", Label).update(f"Study Start Date: {start_date} | Study End Date: {end_date} | Participant Initials: {ID} | Current Compliance = (✓ SR + ✓ MR) / # of expected surveys: {current_comp} | Total Compliance = (✓ SR + ✓ MR)/56 : {total_comp}")
+                self.query_one("#start_end_date", Label).update(f"Study Start Date: {start_date} | Study End Date: {end_date} | Participant Initials: {ID} | Current Compliance: (✓ SR + ✓ MR) / # of expected surveys = {current_comp}% | Total Compliance: (✓ SR + ✓ MR)/56 = {total_comp}%")
                 print(compliance_rows, send_time_rows)
                 # Convert start_date and end_date into dateTime objects
                 try:

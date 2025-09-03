@@ -49,8 +49,8 @@ pip3 uninstall project-insight-tui
 
 ## TODO
 - [ ] Implement report generation.
-- [ ] Implement manual text message sending.
-- [ ] Implement CloudWatch logs viewing.
+- [x] Implement manual text message sending.
+- [x] Implement CloudWatch logs viewing.
 - [ ] Implement Cloudwatch alarms (AWS Backend).
 
 

@@ -4,6 +4,7 @@ from textual.containers import HorizontalGroup
 from textual.widgets import Label, Button, Footer, Header
 from ..elements.menu_screen import MenuScreen
 from ..elements.check_individual_compliance_screen import CheckIndividualComplianceScreen
+from ..elements.report_generation_screen import ReportGenerationScreen
 from ..methods.initialize_methods import get_env_variables
 class GenerateReportScreen(Screen):
     CSS_PATH = "generate_report_screen.tcss"
@@ -38,7 +39,7 @@ class GenerateReportScreen(Screen):
         
     def on_button_pressed(self, event: Button.Pressed) -> None:
         if event.button.id == "generate_report_button":
-            self.app.push_screen("generate_report") #TODO Make this screen
+            self.app.push_screen(ReportGenerationScreen()) 
         elif event.button.id == "check_individual_compliance_button":
             self.app.push_screen(CheckIndividualComplianceScreen())
         elif event.button.id == "exit_button":

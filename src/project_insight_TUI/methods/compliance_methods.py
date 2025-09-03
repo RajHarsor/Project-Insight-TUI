@@ -64,7 +64,8 @@ def get_log_events(schedule_type, date_range, study_start_date_converted, study_
     for log_group_name in log_group_name_list:
         response = cloudwatch_logs.describe_log_streams(
             logGroupName=log_group_name,
-            orderBy='LogStreamName',
+            orderBy='LastEventTime',
+            descending=True
         )
         log_stream_df = pl.DataFrame(response['logStreams'])
         
@@ -88,6 +89,7 @@ def get_log_events(schedule_type, date_range, study_start_date_converted, study_
             (pl.col('firstEventTimestamp') >= study_start_date_converted) &
             (pl.col('firstEventTimestamp') <= study_end_date_converted)
         )
+        print(f"Start Date: {study_start_date_converted}, End Date: {study_end_date_converted}")
         
         # Convert firstEventTimestamp to string for filtering
         log_stream_df = log_stream_df.with_columns(
@@ -263,75 +265,78 @@ def generate_compliance_tables(participant_id: str):
                 print(f"  Day {day} is not in any expected range")
         
         # Check survey 2 (no specific day range, just check if the date exists)
-        survey_2_row = survey_2_df.filter(
-            (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
-        )
-        if not survey_2_row.is_empty():
-            print("  ✓ Found Survey 2 Row:", survey_2_row)
-            if len(survey_2_row) == 1:
-                date = survey_2_row["Date"][0]
-                time = survey_2_row["Time"][0]
-                name = survey_2_row["Name"][0]
-                number_of_responses = len(survey_2_row)
-                participant_completion_times_dict[day][1].append([time, name, date, number_of_responses, "S2"])
-            elif len(survey_2_row) > 1:
-                print(f"  ✗ More than one response found for date: {date}, ID: {ID}")
-                date = date
-                time = "Multiple Responses"
-                name = "Multiple Responses"
-                number_of_responses = len(survey_2_row)
-                participant_completion_times_dict[day][1].append([time, name, date, number_of_responses, "S2"])
-        else:
-            print(f"  ✗ No match found for date: {date}, ID: {ID}")
-            participant_completion_times_dict[day][1].append(["No Response", "No Response", date, 0, "S2"])
+        if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
+            survey_2_row = survey_2_df.filter(
+                (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
+            )
+            if not survey_2_row.is_empty():
+                print("  ✓ Found Survey 2 Row:", survey_2_row)
+                if len(survey_2_row) == 1:
+                    date = survey_2_row["Date"][0]
+                    time = survey_2_row["Time"][0]
+                    name = survey_2_row["Name"][0]
+                    number_of_responses = len(survey_2_row)
+                    participant_completion_times_dict[day][1].append([time, name, date, number_of_responses, "S2"])
+                elif len(survey_2_row) > 1:
+                    print(f"  ✗ More than one response found for date: {date}, ID: {ID}")
+                    date = date
+                    time = "Multiple Responses"
+                    name = "Multiple Responses"
+                    number_of_responses = len(survey_2_row)
+                    participant_completion_times_dict[day][1].append([time, name, date, number_of_responses, "S2"])
+            else:
+                print(f"  ✗ No match found for date: {date}, ID: {ID}")
+                participant_completion_times_dict[day][1].append(["No Response", "No Response", date, 0, "S2"])
 
             
         # Check survey 3 (no specific day range, just check if the date exists)
-        survey_3_row = survey_3_df.filter(
-            (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
-        )
-        if not survey_3_row.is_empty():
-            print("  ✓ Found Survey 3 Row:", survey_3_row)
-            if len(survey_3_row) == 1:
-                date = survey_3_row["Date"][0]
-                time = survey_3_row["Time"][0]
-                name = survey_3_row["Name"][0]
-                number_of_responses = len(survey_3_row)
-                participant_completion_times_dict[day][2].append([time, name, date, number_of_responses, "S3"])
-            elif len(survey_3_row) > 1:
-                print(f"  ✗ More than one response found for date: {date}, ID: {ID}")
-                date = date
-                time = "Multiple Responses"
-                name = "Multiple Responses"
-                number_of_responses = len(survey_3_row)
-                participant_completion_times_dict[day][2].append([time, name, date, number_of_responses, "S3"])
-        else:
-            print(f"  ✗ No match found for date: {date}, ID: {ID}")
-            participant_completion_times_dict[day][2].append(["No Response", "No Response", date, 0, "S3"])
+        if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
+            survey_3_row = survey_3_df.filter(
+                (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
+            )
+            if not survey_3_row.is_empty():
+                print("  ✓ Found Survey 3 Row:", survey_3_row)
+                if len(survey_3_row) == 1:
+                    date = survey_3_row["Date"][0]
+                    time = survey_3_row["Time"][0]
+                    name = survey_3_row["Name"][0]
+                    number_of_responses = len(survey_3_row)
+                    participant_completion_times_dict[day][2].append([time, name, date, number_of_responses, "S3"])
+                elif len(survey_3_row) > 1:
+                    print(f"  ✗ More than one response found for date: {date}, ID: {ID}")
+                    date = date
+                    time = "Multiple Responses"
+                    name = "Multiple Responses"
+                    number_of_responses = len(survey_3_row)
+                    participant_completion_times_dict[day][2].append([time, name, date, number_of_responses, "S3"])
+            else:
+                print(f"  ✗ No match found for date: {date}, ID: {ID}")
+                participant_completion_times_dict[day][2].append(["No Response", "No Response", date, 0, "S3"])
         
         # Check survey 4 (no specific day range, just check if the date exists)
-        survey_4_row = survey_4_df.filter(
-            (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
-        )
-        if not survey_4_row.is_empty():
-            print("  ✓ Found Survey 4 Row:", survey_4_row)
-            if len(survey_4_row) == 1:
-                date = survey_4_row["Date"][0]
-                time = survey_4_row["Time"][0]
-                name = survey_4_row["Name"][0]
-                number_of_responses = len(survey_4_row)
-                participant_completion_times_dict[day][3].append([time, name, date, number_of_responses, "S4"])
-            elif len(survey_4_row) > 1:
-                print(f"  ✗ More than one response found for date: {date}, ID: {ID}")
-                date = date
-                time = "Multiple Responses"
-                name = "Multiple Responses"
-                number_of_responses = len(survey_4_row)
-                participant_completion_times_dict[day][3].append([time, name, date, number_of_responses, "S4"])
-        else:
-            print(f"  ✗ No match found for date: {date}, ID: {ID}")
-            participant_completion_times_dict[day][3].append(["No Response", "No Response", date, 0, "S4"])
-            
+            if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
+                survey_4_row = survey_4_df.filter(
+                    (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
+                )
+                if not survey_4_row.is_empty():
+                    print("  ✓ Found Survey 4 Row:", survey_4_row)
+                    if len(survey_4_row) == 1:
+                        date = survey_4_row["Date"][0]
+                        time = survey_4_row["Time"][0]
+                        name = survey_4_row["Name"][0]
+                        number_of_responses = len(survey_4_row)
+                        participant_completion_times_dict[day][3].append([time, name, date, number_of_responses, "S4"])
+                    elif len(survey_4_row) > 1:
+                        print(f"  ✗ More than one response found for date: {date}, ID: {ID}")
+                        date = date
+                        time = "Multiple Responses"
+                        name = "Multiple Responses"
+                        number_of_responses = len(survey_4_row)
+                        participant_completion_times_dict[day][3].append([time, name, date, number_of_responses, "S4"])
+                else:
+                    print(f"  ✗ No match found for date: {date}, ID: {ID}")
+                    participant_completion_times_dict[day][3].append(["No Response", "No Response", date, 0, "S4"])
+                    
     # Convert the participant_completion_times_dict to a numpy array for easier manipulation
     dif_array = np.full((14,4), "", dtype=object)
     for responses in participant_completion_times_dict.keys():
@@ -440,14 +445,16 @@ def generate_compliance_tables(participant_id: str):
     # Count how many ✓ SR and ✓ MR
     count_mr = np.sum(dif_array == "✓ MR")
     count_sr = np.sum(dif_array == "✓ SR")
-    total_comp = count_mr + count_sr / 56
+    total_comp = round(((count_mr + count_sr) / 56) * 100, 2)
     print("Total Completion Rate (✓ MR + ✓ SR):", total_comp)
     
-    #current_comp should be the total number of non-zero entries in dif_array
-    current_comp = (count_mr + count_sr) / np.sum(dif_array != 0)
+    # Count how many not None in the dictionary
+    count_not_none = sum(1 for times in send_time_dict.values() for time in times if time is not None)
+    print("Count of None values in send_time_dict:", count_not_none)
+    
+    current_comp = round(((count_mr + count_sr) / count_not_none) * 100, 2) 
     print("Current Completion Rate (✓ MR + ✓ SR) / Total Sent:", current_comp)
     
-        
     # Final rows to send to the frontend
     compliance_rows = []
     for i in range(len(dif_array)):
@@ -461,6 +468,7 @@ def generate_compliance_tables(participant_id: str):
         )
         compliance_rows.append(compliance_row)
     compliance_rows.insert(0, ("Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
+    print(compliance_rows)
     
     send_time_rows = []
     for i in range(14):
@@ -476,6 +484,11 @@ def generate_compliance_tables(participant_id: str):
         )
         send_time_rows.append(row)
     send_time_rows.insert(0, ("Date", "Day", "Survey 1", "Survey 2", "Survey 3", "Survey 4"))
-    message = "Success"
+    message = "Quick note: \n In the compliance table you may see NR for surveys that have not been sent out yet for today or have not passed the hour long threshold participants have to complete the survey. This is a bug, though, the compliance calculations should still correct."
+    #FIXME: One way to easily fix this bug is to compare the send_times_row with the compliance_rows. If send_time_row is None for that position, the compliance_row should be "" instead of NR or any other value.
     
+    print(send_time_rows)
+    
+    print(f"dictionary: {dict}")
+            
     return compliance_rows, send_time_rows, ID, message, current_comp, total_comp

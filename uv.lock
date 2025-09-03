@@ -180,7 +180,7 @@ wheels = [
 
 [[package]]
 name = "project-insight-tui"
-version = "0.4.2"
+version = "0.5.1"
 source = { editable = "." }
 dependencies = [
     { name = "boto3" },
