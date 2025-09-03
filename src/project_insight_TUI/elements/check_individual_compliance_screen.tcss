@@ -52,6 +52,14 @@
     height: auto;
 }
 
+#compliance_result {
+    padding-top: 1;
+    height: auto;
+    text-align: center;
+    align: center middle;
+    width: 100%;
+}
+
 #send_times_group {
     align: center middle;
     padding-top: 1;
