@@ -156,7 +156,12 @@ def generate_compliance_tables(participant_id: str):
         survey = survey.with_columns(
         pl.col("Date/Time").dt.strftime("%Y-%m-%d").alias("Date"),
         pl.col("Date/Time").dt.strftime("%H:%M:%S").alias("Time")
-        ) 
+        )
+        
+        # Remove whitespace from any entry in Name column
+        survey = survey.with_columns(
+            pl.col("Name").str.strip_chars().alias("Name")
+        )
         
         survey_list[idx] = survey  # Update the original list
     
@@ -213,7 +218,7 @@ def generate_compliance_tables(participant_id: str):
             print(f"\nChecking date: {date} with day: {day}")
             
             # Check if the day is within the range of 1 to 4
-            if (day >= 1 and day <= 4) or (day >= 13 and day <= 14):  
+            if (day >= 1 and day <= 4) or (day >= 13 and day <= 14):
                 survey_1b_row = survey_1b_df.filter(
                     (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
                 )
