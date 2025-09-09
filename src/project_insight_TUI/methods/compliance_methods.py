@@ -492,3 +492,4 @@ def generate_compliance_tables(participant_id: str):
     print(f"dictionary: {dict}")
             
     return compliance_rows, send_time_rows, ID, message, current_comp, total_comp
+
