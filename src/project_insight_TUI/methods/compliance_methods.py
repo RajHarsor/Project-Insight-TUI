@@ -204,6 +204,9 @@ def generate_compliance_tables(participant_id: str):
         # Check if an ID is the same as another ID in the database
         if db_df.filter(pl.col("ID") == ID).height > 1:
             use_age = True
+        else:
+            use_age = False
+        print(f"Use age for disambiguation: {use_age}")
     except Exception as e:
         print(f"Error retrieving participant initials: {e}")
         message = f"Error retrieving participant initials: {e}"
