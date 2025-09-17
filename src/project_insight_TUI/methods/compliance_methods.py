@@ -142,7 +142,7 @@ def generate_compliance_tables(participant_id: str):
     except Exception as e:
         print(f"Error loading CSV files: {e}")
         message = f"Error loading CSV files: {e}. Please check if you have Google Drive open and are logged in."
-        return None, None, None, message, None, None
+        return None, None, None, message, None, None, None
     
     for idx, survey in enumerate(survey_list):
         survey = survey.with_columns(
@@ -160,7 +160,7 @@ def generate_compliance_tables(participant_id: str):
         
         # Remove whitespace from any entry in "Name" column
         survey = survey.with_columns(
-            pl.col("Name").str.strip_chars().alias("Name")
+            pl.col("Name").str.strip_chars().alias("Name"),
         )
         
         survey_list[idx] = survey  # Update the original list
@@ -191,15 +191,23 @@ def generate_compliance_tables(participant_id: str):
     dict = get_log_events(schedule_type, date_range, study_start_date_converted, study_end_date_converted)
     send_time_dict = {date: [datetime.datetime.strptime(time, "%H:%M:%S") if time else None for time in times] for date, times in dict.items()}
 
+
+    participant_row = db_df.filter(pl.col("Participant ID #") == int(participant_id))
+    print("Participant Row:")
+    print(participant_row)
     # ID Number Identification
     try:
-        participant_row = db_df.filter(pl.col("Participant ID #") == int(participant_id))
         ID = str(participant_row["ID"][0])
         print(f"Participant ID {participant_id} corresponds to initials: {ID}")
+        age = str(participant_row["Age"][0])
+        
+        # Check if an ID is the same as another ID in the database
+        if db_df.filter(pl.col("ID") == ID).height > 1:
+            use_age = True
     except Exception as e:
         print(f"Error retrieving participant initials: {e}")
         message = f"Error retrieving participant initials: {e}"
-        return None, None, None, message, None, None
+        return None, None, None, message, None, None, None
     
     # Setup for checks
     list_of_len = list(range(1, len(date_range) + 1))
@@ -219,9 +227,16 @@ def generate_compliance_tables(participant_id: str):
             
             # Check if the day is within the range of 1 to 4
             if (day >= 1 and day <= 4) or (day >= 13 and day <= 14):
-                survey_1b_row = survey_1b_df.filter(
-                    (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
-                )
+                if use_age is True:
+                    survey_1b_row = survey_1b_df.filter(
+                        (pl.col("Date") == date) & 
+                        ((pl.col("Name").str.to_lowercase() == ID.lower())) &
+                        (pl.col("Age") == int(age))
+                    )
+                else:
+                    survey_1b_row = survey_1b_df.filter(
+                        (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
+                    )
                 
                 if not survey_1b_row.is_empty():
                     print("  ✓ Found Survey 1b Row:", survey_1b_row)
@@ -245,9 +260,17 @@ def generate_compliance_tables(participant_id: str):
                     participant_completion_times_dict[day][0].append(["No Response", "No Response", date, 0, "S1b"])
                 
             elif day >= 5 and day <= 12:
-                survey_1a_row = survey_1a_df.filter(
-                    (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
-                )
+                if use_age is True:
+                    survey_1a_row = survey_1a_df.filter(
+                        (pl.col("Date") == date) & 
+                        ((pl.col("Name").str.to_lowercase() == ID.lower())) &
+                        (pl.col("Age") == int(age))
+                    )
+                else:
+                    survey_1a_row = survey_1a_df.filter(
+                        (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
+                    )
+                    
                 if not survey_1a_row.is_empty():
                     print("  ✓ Found Survey 1A Row:", survey_1a_row)
                     if len(survey_1a_row) == 1:
@@ -271,9 +294,17 @@ def generate_compliance_tables(participant_id: str):
         
         # Check survey 2 (no specific day range, just check if the date exists)
         if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
-            survey_2_row = survey_2_df.filter(
-                (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
-            )
+            if use_age is True:
+                survey_2_row = survey_2_df.filter(
+                    (pl.col("Date") == date) & 
+                    ((pl.col("Name").str.to_lowercase() == ID.lower())) &
+                    (pl.col("Age") == int(age))
+                )
+            else:
+                survey_2_row = survey_2_df.filter(
+                    (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
+                )
+                
             if not survey_2_row.is_empty():
                 print("  ✓ Found Survey 2 Row:", survey_2_row)
                 if len(survey_2_row) == 1:
@@ -296,9 +327,16 @@ def generate_compliance_tables(participant_id: str):
             
         # Check survey 3 (no specific day range, just check if the date exists)
         if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
-            survey_3_row = survey_3_df.filter(
-                (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
-            )
+            if use_age is True:
+                survey_3_row = survey_3_df.filter(
+                    (pl.col("Date") == date) & 
+                    ((pl.col("Name").str.to_lowercase() == ID.lower())) &
+                    (pl.col("Age") == int(age))
+                )
+            else:
+                survey_3_row = survey_3_df.filter(
+                    (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
+                )
             if not survey_3_row.is_empty():
                 print("  ✓ Found Survey 3 Row:", survey_3_row)
                 if len(survey_3_row) == 1:
@@ -320,9 +358,16 @@ def generate_compliance_tables(participant_id: str):
         
         # Check survey 4 (no specific day range, just check if the date exists)
             if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
-                survey_4_row = survey_4_df.filter(
-                    (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
-                )
+                if use_age is True:
+                    survey_4_row = survey_4_df.filter(
+                        (pl.col("Date") == date) & 
+                        ((pl.col("Name").str.to_lowercase() == ID.lower())) &
+                        (pl.col("Age") == int(age))
+                    )
+                else:
+                    survey_4_row = survey_4_df.filter(
+                        (pl.col("Date") == date) & (pl.col("Name").str.to_lowercase() == ID.lower())
+                    )
                 if not survey_4_row.is_empty():
                     print("  ✓ Found Survey 4 Row:", survey_4_row)
                     if len(survey_4_row) == 1:
@@ -506,5 +551,5 @@ def generate_compliance_tables(participant_id: str):
     
     print(f"dictionary: {dict}")
             
-    return compliance_rows, send_time_rows, ID, message, current_comp, total_comp
+    return compliance_rows, send_time_rows, ID, message, current_comp, total_comp, age
 
