@@ -158,7 +158,7 @@ def generate_compliance_tables(participant_id: str):
         pl.col("Date/Time").dt.strftime("%H:%M:%S").alias("Time")
         )
         
-        # Remove whitespace from any entry in Name column
+        # Remove whitespace from any entry in "Name" column
         survey = survey.with_columns(
             pl.col("Name").str.strip_chars().alias("Name")
         )
@@ -382,6 +382,11 @@ def generate_compliance_tables(participant_id: str):
                     filtered_rows = filtered_rows.with_columns(
                         pl.col("Time").str.strptime(pl.Time, "%H:%M:%S", strict=False).alias("Time")
                     )
+                    # If the message hasn't been sent yet, leave blank and skip
+                    if send_time is None:
+                        print(f"    No send time for {date} Survey {survey_index + 1}; leaving blank.")
+                        dif_array[responses - 1][survey_index] = ""
+                        continue
                     for row in filtered_rows.iter_rows():
                         # See if the time is within 1 hour of the send time by calculating the difference
                         time_obj = row[-1]  # Assuming the Time column is at the last index
@@ -428,7 +433,12 @@ def generate_compliance_tables(participant_id: str):
                     
                     # See if the time is within 1 hour of the send time
                     send_time = send_time_dict[date][survey_index]
-                    
+                    # If the message hasn't been sent yet, leave blank and skip
+                    if send_time is None:
+                        print(f"    No send time for {date} Survey {survey_index + 1}; leaving blank.")
+                        dif_array[responses - 1][survey_index] = ""
+                        continue
+                     
                     # Convert 'time' variable to a datetime.time object
                     if isinstance(time, str):
                         time_obj = datetime.datetime.strptime(time, "%H:%M:%S").time()
