@@ -59,11 +59,11 @@ class CheckIndividualComplianceScreen(Screen):
             if user_data:
                 start_date = user_data.get("study_start_date", "N/A")
                 end_date = user_data.get("study_end_date", "N/A")
-                compliance_rows, send_time_rows, ID, message, current_comp, total_comp = generate_compliance_tables(participant_id)
+                compliance_rows, send_time_rows, ID, message, current_comp, total_comp, age = generate_compliance_tables(participant_id)
                 # Update the compliance result label
                 if message:
                     self.query_one("#compliance_result", Label).update(message)
-                self.query_one("#start_end_date", Label).update(f"Study Start Date: {start_date} | Study End Date: {end_date} | Participant Initials: {ID} | Current Compliance: (✓ SR + ✓ MR) / # of expected surveys = {current_comp}% | Total Compliance: (✓ SR + ✓ MR)/56 = {total_comp}%")
+                self.query_one("#start_end_date", Label).update(f"Study Start Date: {start_date} | Study End Date: {end_date} | Participant Initials: {ID} | Age: {age} | Current Compliance: (✓ SR + ✓ MR) / # of expected surveys = {current_comp}% | Total Compliance: (✓ SR + ✓ MR)/56 = {total_comp}%")
                 print(compliance_rows, send_time_rows)
                 # Convert start_date and end_date into dateTime objects
                 try:
