@@ -10,6 +10,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "boto3>=1.38.23",
+    "great-tables>=0.18.0",
     "numpy>=2.3.2",
     "polars>=1.32.0",
     "python-dotenv>=0.9.9",
