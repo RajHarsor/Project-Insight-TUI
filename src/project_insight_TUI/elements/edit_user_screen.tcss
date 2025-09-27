@@ -17,6 +17,7 @@
     text-align: center;
     height: 10;
     row-span: 1;
+    offset-x: -30;
     column-span: 2;
 }
 
@@ -43,7 +44,7 @@
     width: 100%;
     height: 10;
     offset-y: -12;
-    offset-x: 35;
+    offset-x: 60;
 }
 
 #new_details_label {
