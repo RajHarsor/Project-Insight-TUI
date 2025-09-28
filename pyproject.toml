@@ -13,6 +13,7 @@ dependencies = [
     "great-tables>=0.18.0",
     "numpy>=2.3.2",
     "polars>=1.32.0",
+    "pylatex>=1.4.2",
     "python-dotenv>=0.9.9",
     "pytz>=2025.2",
     "reportlab>=4.4.3",
