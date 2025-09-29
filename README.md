@@ -46,15 +46,22 @@ If that doesn't work, you can try the following command:
 ```bash
 pip3 uninstall project-insight-tui
 ```
+## Report Generation Installation (Requires LaTeX)
+
+For Mac:
+```bash
+brew install --cask mactex
+```
+For Windows (Untested):
+1. Download and install MiKTeX from https://miktex.org/download
+2. During installation, make sure to select the option to install missing packages on-the-fly
+
 
 ## TODO
-- [ ] Implement report generation.
+- [x] Implement report generation.
 - [x] Implement manual text message sending.
 - [x] Implement CloudWatch logs viewing.
 - [ ] Implement Cloudwatch alarms (AWS Backend).
-
-## License
-This project is licensed under the MIT License.
 
 ## Issues and Contact
 If you encounter any issues or have questions, feel free to open an issue on the [GitHub repository](https://github.com/RajHarsor/Project-Insight-TUI/issues) and/or contact harsora@rowan.edu.
