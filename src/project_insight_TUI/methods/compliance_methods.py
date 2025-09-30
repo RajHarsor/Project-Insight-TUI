@@ -2,7 +2,6 @@ from pydoc import doc
 import polars as pl
 from great_tables import GT, style, loc
 from datetime import datetime, timedelta
-import datetime
 from ..methods.initialize_methods import get_env_variables
 import boto3
 import pytz
@@ -182,8 +181,8 @@ def generate_compliance_tables(participant_id: str):
     study_start_date, study_end_date, schedule_type = get_participant_variables(str(participant_id))
     
     ## Convert dates to datetime objects
-    study_start_date_converted = datetime.datetime.strptime(study_start_date, "%Y-%m-%d").replace(tzinfo=pytz.timezone("America/New_York"))
-    study_end_date_converted = datetime.datetime.strptime(study_end_date, "%Y-%m-%d").replace(
+    study_start_date_converted = datetime.strptime(study_start_date, "%Y-%m-%d").replace(tzinfo=pytz.timezone("America/New_York"))
+    study_end_date_converted = datetime.strptime(study_end_date, "%Y-%m-%d").replace(
         hour=23, minute=59, second=59, tzinfo=pytz.timezone("America/New_York")
     )
     
@@ -192,11 +191,11 @@ def generate_compliance_tables(participant_id: str):
     current_date = study_start_date_converted
     while current_date <= study_end_date_converted:
         date_range.append(current_date.strftime("%Y-%m-%d"))
-        current_date += datetime.timedelta(days=1)
+        current_date += timedelta(days=1)
     
     # Get log events
     dict = get_log_events(schedule_type, date_range, study_start_date_converted, study_end_date_converted)
-    send_time_dict = {date: [datetime.datetime.strptime(time, "%H:%M:%S") if time else None for time in times] for date, times in dict.items()}
+    send_time_dict = {date: [datetime.strptime(time, "%H:%M:%S") if time else None for time in times] for date, times in dict.items()}
 
 
     participant_row = db_df.filter(pl.col("Participant ID #") == int(participant_id))
@@ -228,11 +227,11 @@ def generate_compliance_tables(participant_id: str):
     for i in zip_date_strings:
         day = int(i[1])
         date = i[0]
-        date_datetime = datetime.datetime.strptime(date, "%Y-%m-%d")
-        curr_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        date_datetime = datetime.strptime(date, "%Y-%m-%d")
+        curr_date = datetime.now().strftime("%Y-%m-%d")
         
         # Only check the days that have happened so far and today
-        if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
+        if date_datetime <= datetime.strptime(curr_date, "%Y-%m-%d"):
             print(f"\nChecking date: {date} with day: {day}")
             
             # Check if the day is within the range of 1 to 4
@@ -303,7 +302,7 @@ def generate_compliance_tables(participant_id: str):
                 print(f"  Day {day} is not in any expected range")
         
         # Check survey 2 (no specific day range, just check if the date exists)
-        if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
+        if date_datetime <= datetime.strptime(curr_date, "%Y-%m-%d"):
             if use_age is True:
                 survey_2_row = survey_2_df.filter(
                     (pl.col("Date") == date) & 
@@ -336,7 +335,7 @@ def generate_compliance_tables(participant_id: str):
 
             
         # Check survey 3 (no specific day range, just check if the date exists)
-        if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
+        if date_datetime <= datetime.strptime(curr_date, "%Y-%m-%d"):
             if use_age is True:
                 survey_3_row = survey_3_df.filter(
                     (pl.col("Date") == date) & 
@@ -367,7 +366,7 @@ def generate_compliance_tables(participant_id: str):
                 participant_completion_times_dict[day][2].append(["No Response", "No Response", date, 0, "S3"])
         
         # Check survey 4 (no specific day range, just check if the date exists)
-            if date_datetime <= datetime.datetime.strptime(curr_date, "%Y-%m-%d"):
+            if date_datetime <= datetime.strptime(curr_date, "%Y-%m-%d"):
                 if use_age is True:
                     survey_4_row = survey_4_df.filter(
                         (pl.col("Date") == date) & 
@@ -447,11 +446,11 @@ def generate_compliance_tables(participant_id: str):
                         time_obj = row[-1]  # Assuming the Time column is at the last index
                         if send_time and time_obj:
                             if isinstance(time_obj, str):
-                                time_obj = datetime.datetime.strptime(time_obj, "%H:%M:%S").time()
+                                time_obj = datetime.strptime(time_obj, "%H:%M:%S").time()
                             # Combine date and time to create datetime objects
-                            date_obj = datetime.datetime.strptime(date, "%Y-%m-%d")
-                            response_dt = datetime.datetime.combine(date_obj, time_obj)
-                            send_dt = datetime.datetime.combine(date_obj, send_time.time())
+                            date_obj = datetime.strptime(date, "%Y-%m-%d")
+                            response_dt = datetime.combine(date_obj, time_obj)
+                            send_dt = datetime.combine(date_obj, send_time.time())
                             difference = (response_dt - send_dt).total_seconds() / 3600  # Convert to hours
                             print(f"    Comparing send time {send_dt} with response time {response_dt}, difference: {difference} hours")
                             if difference <= 1:
@@ -496,12 +495,12 @@ def generate_compliance_tables(participant_id: str):
                      
                     # Convert 'time' variable to a datetime.time object
                     if isinstance(time, str):
-                        time_obj = datetime.datetime.strptime(time, "%H:%M:%S").time()
+                        time_obj = datetime.strptime(time, "%H:%M:%S").time()
                     
                     # Calculate the difference between send_time and time_obj
-                    date_obj = datetime.datetime.strptime(date, "%Y-%m-%d")
-                    response_dt = datetime.datetime.combine(date_obj, time_obj)
-                    send_dt = datetime.datetime.combine(date_obj, send_time.time())
+                    date_obj = datetime.strptime(date, "%Y-%m-%d")
+                    response_dt = datetime.combine(date_obj, time_obj)
+                    send_dt = datetime.combine(date_obj, send_time.time())
                     difference = (response_dt - send_dt).total_seconds() / 3600  # Convert to hours
                     print(f"    Comparing send time {send_dt} with response time {response_dt}, difference: {difference} hours")
                     if difference <= 1:
