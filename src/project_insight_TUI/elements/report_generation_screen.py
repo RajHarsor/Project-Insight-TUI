@@ -26,6 +26,7 @@ class ReportGenerationScreen(Screen):
         yield VerticalGroup(
             Label("1. Choose a date and save location", id = "instruction_label1"),
             Label("2. Generate the report!", id = "instruction_label2"),
+            Label("Note: If the report looks incorrect, please open Google Drive and close and re-open the application.", id="instruction_label3"),
             id="instructions_container"
         )
         yield Input(placeholder="Enter Date (YYYY-MM-DD)", id="date_input")
