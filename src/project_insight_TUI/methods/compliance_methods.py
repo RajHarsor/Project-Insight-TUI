@@ -2,6 +2,7 @@ from pydoc import doc
 import polars as pl
 from great_tables import GT, style, loc
 from datetime import datetime, timedelta
+import datetime
 from ..methods.initialize_methods import get_env_variables
 import boto3
 import pytz
