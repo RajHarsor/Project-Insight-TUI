@@ -1355,30 +1355,26 @@ def generate_compliance_report(date: str, path: str):
 
         doc.generate_pdf(abs_base_path, clean_tex=False)
         print(f"Report generated: {abs_base_path}")
-        
-        base_name = os.path.basename(abs_base_path)
-        parent_dir = os.path.dirname(abs_pdf_path)
-        
-        for file in os.listdir(parent_dir):
-            if file.startswith(base_name) and not file.endswith('.pdf'):
-                try:
-                    os.remove(os.path.join(parent_dir, file))
-                    print(f"Removed auxiliary file: {file}")
-                except Exception as e:
-                    print(f"Could not remove file: {file}. Error: {e}")
     except Exception as e:
         print(f"PDF generated with warnings: {pdf_path}")
         print(f"Warning: {e}")
 
-    # Find the files that have the same prefix as pdf_path but end in things other than .pdf
-    # base_path = pdf_path.replace('.pdf', '')
-    # for file in os.listdir(path):
-    #     if file.startswith(os.path.basename(base_path)) and not file.endswith('.pdf'):
-    #         try:
-    #             os.remove(os.path.join(path, file))
-    #             print(f"Removed auxiliary file: {file}")
-    #         except Exception as e:
-    #             print(f"Could not remove file: {file}. Error: {e}")
+    #Find the files that have the same prefix as pdf_path but end in things other than .pdf
+    base_name = os.path.basename(abs_base_path)  # This gets just the filename without path
+    parent_dir = os.path.dirname(abs_pdf_path)   # This gets the directory path
+
+    print(f"Looking for files starting with: {base_name}")
+    print(f"In directory: {parent_dir}")
+
+    for file in os.listdir(parent_dir):
+        print(f"Checking file: {file}")
+        if file.startswith(base_name) and not file.endswith('.pdf'):
+            try:
+                file_path = os.path.join(parent_dir, file)
+                os.remove(file_path)
+                print(f"Removed auxiliary file: {file}")
+            except Exception as e:
+                print(f"Could not remove file: {file}. Error: {e}")
 
 """Auxiliary Functions"""
 
