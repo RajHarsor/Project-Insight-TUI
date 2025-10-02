@@ -1349,21 +1349,36 @@ def generate_compliance_report(date: str, path: str):
 
 
     try:
-        doc.generate_pdf(pdf_path.replace('.pdf', ''), clean_tex=False)
-        print(f"Report generated: {pdf_path}")
+        abs_pdf_path = os.path.abspath(pdf_path)
+        abs_base_path = abs_pdf_path.replace('.pdf', '')
+        os.makedirs(os.path.dirname(abs_pdf_path), exist_ok=True)
+
+        doc.generate_pdf(abs_base_path, clean_tex=False)
+        print(f"Report generated: {abs_base_path}")
+        
+        base_name = os.path.basename(abs_base_path)
+        parent_dir = os.path.dirname(abs_pdf_path)
+        
+        for file in os.listdir(parent_dir):
+            if file.startswith(base_name) and not file.endswith('.pdf'):
+                try:
+                    os.remove(os.path.join(parent_dir, file))
+                    print(f"Removed auxiliary file: {file}")
+                except Exception as e:
+                    print(f"Could not remove file: {file}. Error: {e}")
     except Exception as e:
         print(f"PDF generated with warnings: {pdf_path}")
         print(f"Warning: {e}")
 
     # Find the files that have the same prefix as pdf_path but end in things other than .pdf
-    base_path = pdf_path.replace('.pdf', '')
-    for file in os.listdir(path):
-        if file.startswith(os.path.basename(base_path)) and not file.endswith('.pdf'):
-            try:
-                os.remove(os.path.join(path, file))
-                print(f"Removed auxiliary file: {file}")
-            except Exception as e:
-                print(f"Could not remove file: {file}. Error: {e}")
+    # base_path = pdf_path.replace('.pdf', '')
+    # for file in os.listdir(path):
+    #     if file.startswith(os.path.basename(base_path)) and not file.endswith('.pdf'):
+    #         try:
+    #             os.remove(os.path.join(path, file))
+    #             print(f"Removed auxiliary file: {file}")
+    #         except Exception as e:
+    #             print(f"Could not remove file: {file}. Error: {e}")
 
 """Auxiliary Functions"""
 
