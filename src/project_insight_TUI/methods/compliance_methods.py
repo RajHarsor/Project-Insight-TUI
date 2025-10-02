@@ -1283,7 +1283,8 @@ def generate_compliance_report(date: str, path: str):
     doc.append(NoEscape(r'{\large\textbf{\mbox{Missing Two Consecutive NRs - ID (Day in Study):}}}}'))
     doc.append(NoEscape(r'\\'))
     if two_missed:
-        with doc.create(Environment('itemize')) as itemize:
+        from pylatex import Itemize
+        with doc.create(Itemize()) as itemize:
             for participant in two_missed:
                 itemize.append(NoEscape(rf'{participant}'))
     else:
@@ -1298,7 +1299,8 @@ def generate_compliance_report(date: str, path: str):
     doc.append(NoEscape(r'\\'))
     #doc.append(NoEscape(r'\begin{itemize}'))
     if missing_lb_survey:
-        with doc.create(Environment('itemize')) as itemize:
+        from pylatex import Itemize
+        with doc.create(Itemize()) as itemize:
             for participant in missing_lb_survey:
                 itemize.append(NoEscape(rf'{participant}'))
     else:
