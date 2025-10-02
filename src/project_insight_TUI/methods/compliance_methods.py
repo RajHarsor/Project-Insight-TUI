@@ -1345,7 +1345,7 @@ def generate_compliance_report(date: str, path: str):
 
     # Generate PDF path/report_name/current date and time
     pdf_path = f"{path}/{report_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
-    os.makedirs("reports", exist_ok=True)
+    os.makedirs(path, exist_ok=True)
 
 
     try:
