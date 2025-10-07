@@ -1550,7 +1550,7 @@ def compliance_check_day_level(date_obj, filtered_df_active_full, date_str, date
         
         # Remove whitespace from any entry in "Name" column
         survey = survey.with_columns(
-            pl.col("Name").str.strip_chars().alias("Name"),
+            pl.col("Name").str.strip_chars().alias("Name")
         )
 
         survey_list[idx] = survey  # Update the original list
@@ -1739,11 +1739,82 @@ def compliance_check_day_level(date_obj, filtered_df_active_full, date_str, date
                         time = survey_1a_row["Time"][0]
                         compliance_status = "SR_NC"  # Default
                         # Check compliance based on schedule type (similar logic as above)
-                        # ... add your schedule-specific logic here
+                        if schedule_type == "Early Bird Schedule":
+                            eb_filtered = early_bird_wide.filter(pl.col("Date") == date_str)
+                            if not eb_filtered.is_empty() and "S1" in eb_filtered.columns:
+                                eb_survey_1_time = eb_filtered["S1"][0]
+                                if eb_survey_1_time != ' ':
+                                    eb_survey_1_datetime = datetime.strptime(f"{date_str} {eb_survey_1_time}", "%Y-%m-%d %H:%M")
+                                    survey_1a_datetime = datetime.strptime(f"{date_str} {time}", "%Y-%m-%d %H:%M:%S")
+                                    time_diff = (survey_1a_datetime - eb_survey_1_datetime).total_seconds() / 60
+                                    if 0 <= time_diff <= 60:
+                                        compliance_status = "SR_C"
+                        elif schedule_type == "Standard Schedule":
+                            st_filtered = standard_wide.filter(pl.col("Date") == date_str)
+                            if not st_filtered.is_empty() and "S1" in st_filtered.columns:
+                                st_survey_1_time = st_filtered["S1"][0]
+                                if st_survey_1_time != ' ':
+                                    st_survey_1_datetime = datetime.strptime(f"{date_str} {st_survey_1_time}", "%Y-%m-%d %H:%M")
+                                    survey_1a_datetime = datetime.strptime(f"{date_str} {time}", "%Y-%m-%d %H:%M:%S")
+                                    time_diff = (survey_1a_datetime - st_survey_1_datetime).total_seconds() / 60
+                                    if 0 <= time_diff <= 60:
+                                        compliance_status = "SR_C"
+                        elif schedule_type == "Night Owl Schedule":
+                            no_filtered = night_owl_wide.filter(pl.col("Date") == date_str)
+                            if not no_filtered.is_empty() and "S1" in no_filtered.columns:
+                                no_survey_1_time = no_filtered["S1"][0]
+                                if no_survey_1_time != ' ':
+                                    no_survey_1_datetime = datetime.strptime(f"{date_str} {no_survey_1_time}", "%Y-%m-%d %H:%M")
+                                    survey_1a_datetime = datetime.strptime(f"{date_str} {time}", "%Y-%m-%d %H:%M:%S")
+                                    time_diff = (survey_1a_datetime - no_survey_1_datetime).total_seconds() / 60
+                                    if 0 <= time_diff <= 60:
+                                        compliance_status = "SR_C"
                         current_participant_compliance["survey_1_compliance"] = compliance_status
                     elif len(survey_1a_row) > 1:
                         # Multiple response logic
                         current_participant_compliance["survey_1_compliance"] = "MR_C" # or "MR_NC" based on your logic
+                        if schedule_type == "Early Bird Schedule":
+                            eb_filtered = early_bird_wide.filter(pl.col("Date") == date_str)
+                            if not eb_filtered.is_empty() and "S1" in eb_filtered.columns:
+                                eb_survey_1_time = eb_filtered["S1"][0]
+                                if eb_survey_1_time != ' ':
+                                    eb_survey_1_datetime = datetime.strptime(f"{date_str} {eb_survey_1_time}", "%Y-%m-%d %H:%M")
+                                    compliant_found = False
+                                    for survey_time in survey_1a_row["Time"]:
+                                        survey_1a_datetime = datetime.strptime(f"{date_str} {survey_time}", "%Y-%m-%d %H:%M:%S")
+                                        time_diff = (survey_1a_datetime - eb_survey_1_datetime).total_seconds() / 60
+                                        if 0 <= time_diff <= 60:
+                                            compliant_found = True
+                                            break
+                                    current_participant_compliance["survey_1_compliance"] = "MR_C" if compliant_found else "MR_NC"
+                        elif schedule_type == "Standard Schedule":
+                            st_filtered = standard_wide.filter(pl.col("Date") == date_str)
+                            if not st_filtered.is_empty() and "S1" in st_filtered.columns:
+                                st_survey_1_time = st_filtered["S1"][0]
+                                if st_survey_1_time != ' ':
+                                    st_survey_1_datetime = datetime.strptime(f"{date_str} {st_survey_1_time}", "%Y-%m-%d %H:%M")
+                                    compliant_found = False
+                                    for survey_time in survey_1a_row["Time"]:
+                                        survey_1a_datetime = datetime.strptime(f"{date_str} {survey_time}", "%Y-%m-%d %H:%M:%S")
+                                        time_diff = (survey_1a_datetime - st_survey_1_datetime).total_seconds() / 60
+                                        if 0 <= time_diff <= 60:
+                                            compliant_found = True
+                                            break
+                                    current_participant_compliance["survey_1_compliance"] = "MR_C" if compliant_found else "MR_NC"
+                        elif schedule_type == "Night Owl Schedule":
+                            no_filtered = night_owl_wide.filter(pl.col("Date") == date_str)
+                            if not no_filtered.is_empty() and "S1" in no_filtered.columns:
+                                no_survey_1_time = no_filtered["S1"][0]
+                                if no_survey_1_time != ' ':
+                                    no_survey_1_datetime = datetime.strptime(f"{date_str} {no_survey_1_time}", "%Y-%m-%d %H:%M")
+                                    compliant_found = False
+                                    for survey_time in survey_1a_row["Time"]:
+                                        survey_1a_datetime = datetime.strptime(f"{date_str} {survey_time}", "%Y-%m-%d %H:%M:%S")
+                                        time_diff = (survey_1a_datetime - no_survey_1_datetime).total_seconds() / 60
+                                        if 0 <= time_diff <= 60:
+                                            compliant_found = True
+                                            break
+                                    current_participant_compliance["survey_1_compliance"] = "MR_C" if compliant_found else "MR_NC"
                 else:
                     # No response logic (similar to above)
                     current_participant_compliance["survey_1_compliance"] = "NR"
