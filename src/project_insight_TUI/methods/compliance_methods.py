@@ -2281,3 +2281,6 @@ def check_two_nrs_in_a_row(df):
                 two_missed.append(row['ID # (Days in Study)'])
                 break
     return two_missed
+
+#TODO: Add schedules for active participants to the reports
+#TODO: Double Check logic for adding NRs (some people are getting them when a survey isn't sent yet)
