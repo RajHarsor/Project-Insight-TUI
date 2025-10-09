@@ -1219,11 +1219,13 @@ def generate_compliance_report(date: str, path: str):
             doc.append(NoEscape(r'}'))
             # Make a note about Schedule abbreviations
             doc.append(Command('vspace', '0.2cm'))
+            doc.append(NoEscape(r'\begin{center}'))
             doc.append(NoEscape(r'\begin{itemize}'))
             doc.append(NoEscape(r'\textbf{EBS}: Early Bird Schedule; '))
             doc.append(NoEscape(r'\textbf{SS}: Standard Schedule; '))
             doc.append(NoEscape(r'\textbf{NOS}: Night Owl Schedule'))
             doc.append(NoEscape(r'\end{itemize}'))
+            doc.append(NoEscape(r'\end{center}'))
         else:
             doc.append("No data available for the Recruitment Report.")
     #doc.append(NoEscape(r'\end{landscape}'))
@@ -1299,10 +1301,10 @@ def generate_compliance_report(date: str, path: str):
     doc.append(NoEscape(r'{\large\textbf{\mbox{Missing Two Consecutive NRs - ID (Day in Study):}}}}'))
     doc.append(NoEscape(r'\\'))
     if two_missed:
-        from pylatex import Itemize
-        with doc.create(Itemize()) as itemize:
-            for participant in two_missed:
-                itemize.append(NoEscape(rf'{participant}'))
+        doc.append(NoEscape(r'\begin{itemize}'))
+        for participant in two_missed:
+            doc.append(NoEscape(rf'\item {participant}'))
+        doc.append(NoEscape(r'\end{itemize}'))
     else:
         doc.append(Command('vspace', '0.2cm'))
         doc.append("None")
@@ -1315,10 +1317,10 @@ def generate_compliance_report(date: str, path: str):
     doc.append(NoEscape(r'\\'))
     #doc.append(NoEscape(r'\begin{itemize}'))
     if missing_lb_survey:
-        from pylatex import Itemize
-        with doc.create(Itemize()) as itemize:
-            for participant in missing_lb_survey:
-                itemize.append(NoEscape(rf'{participant}'))
+        doc.append(NoEscape(r'\begin{itemize}'))
+        for participant in missing_lb_survey:
+            doc.append(NoEscape(rf'\item {participant}'))
+        doc.append(NoEscape(r'\end{itemize}'))
     else:
         doc.append(Command('vspace', '0.2cm'))
         doc.append("None")
