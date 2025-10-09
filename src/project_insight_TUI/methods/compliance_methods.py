@@ -634,7 +634,13 @@ def generate_compliance_report(date: str, path: str):
         pl.col("participant_id").alias("Participant ID Active"),
         pl.col("study_start_date").alias("Study Start Date Active"),
         pl.col("study_end_date").alias("Study End Date Active"),
-        pl.col("days_in_study").alias("Days in Study Active")
+        pl.col("days_in_study").alias("Days in Study Active"),
+        pl.col("schedule_type").alias("Schedule Type")
+    )
+    
+    # Go through the Schedule Type column and replace with abbreviations else leave blank " "
+    filtered_df_active = filtered_df_active.with_columns(
+        pl.col("Schedule Type").str.replace_all("Early Bird Schedule", "EBS").str.replace_all("Standard Schedule", "SS").str.replace_all("Night Owl Schedule", "NOS")
     )
 
     print("Filtered Active DF:")
@@ -651,7 +657,7 @@ def generate_compliance_report(date: str, path: str):
     
     filtered_df_past = filtered_df_past.select(
         pl.col("participant_id").alias("Participant ID Past"),
-        pl.col("study_start_date").alias("Study Start Date Past"),
+        #pl.col("study_start_date").alias("Study Start Date Past")
         pl.col("study_end_date").alias("Study End Date Past")
     )
 
@@ -683,6 +689,9 @@ def generate_compliance_report(date: str, path: str):
     final_df = final_df.with_columns(pl.col(pl.FLOAT_DTYPES).fill_nan(None))
     final_df = final_df.with_columns(pl.col(pl.Date).cast(pl.Utf8).fill_null(" "))
     final_df = final_df.with_columns(pl.col("^Participant ID.*$").cast(pl.Utf8).fill_null(" "))
+    final_df = final_df.with_columns(pl.col("Schedule Type").fill_null(" "))
+    final_df = final_df.with_columns(pl.col("Days in Study Active").fill_null(" "))
+
     
     print("Final DF:")
     print(final_df)
@@ -704,11 +713,11 @@ def generate_compliance_report(date: str, path: str):
         )
         .tab_spanner(
             label = "Active ({})".format(active_count),
-            columns = ["Participant ID Active", "Study Start Date Active", "Study End Date Active", "Days in Study Active"]
+            columns = ["Participant ID Active", "Study Start Date Active", "Study End Date Active", "Schedule Type", "Days in Study Active"]
         )
         .tab_spanner(
             label = "Past ({})".format(past_count),
-            columns = ["Participant ID Past", "Study Start Date Past", "Study End Date Past"]
+            columns = ["Participant ID Past", "Study End Date Past"]
         )
         .cols_label(
             **{
@@ -719,8 +728,8 @@ def generate_compliance_report(date: str, path: str):
                 "Study Start Date Active": "Start Date",
                 "Study End Date Active": "End Date",
                 "Days in Study Active": "Days",
+                "Schedule Type": "Schedule",
                 "Participant ID Past": "ID",
-                "Study Start Date Past": "Start Date",
                 "Study End Date Past": "End Date"
             }
         )
@@ -732,11 +741,11 @@ def generate_compliance_report(date: str, path: str):
         )
         .tab_style(
             style = style.fill(color = "lightyellow"),
-            locations = loc.body(columns = ["Participant ID Active", "Study Start Date Active", "Study End Date Active", "Days in Study Active"])
+            locations = loc.body(columns = ["Participant ID Active", "Study Start Date Active", "Study End Date Active", "Schedule Type", "Days in Study Active"])
         )
         .tab_style(
             style = style.fill(color = "lightgreen"),
-            locations = loc.body(columns = ["Participant ID Past", "Study Start Date Past", "Study End Date Past"])
+            locations = loc.body(columns = ["Participant ID Past", "Study End Date Past"])
         )
     )
     latex_table = gt.as_latex()
@@ -1208,6 +1217,13 @@ def generate_compliance_report(date: str, path: str):
             doc.append(NoEscape(r'\resizebox{\textwidth}{!}{%'))
             doc.append(NoEscape(latex_table_clean))
             doc.append(NoEscape(r'}'))
+            # Make a note about Schedule abbreviations
+            doc.append(Command('vspace', '0.2cm'))
+            doc.append(NoEscape(r'\begin{itemize}'))
+            doc.append(NoEscape(r'\textbf{EBS}: Early Bird Schedule; '))
+            doc.append(NoEscape(r'\textbf{SS}: Standard Schedule; '))
+            doc.append(NoEscape(r'\textbf{NOS}: Night Owl Schedule'))
+            doc.append(NoEscape(r'\end{itemize}'))
         else:
             doc.append("No data available for the Recruitment Report.")
     #doc.append(NoEscape(r'\end{landscape}'))
