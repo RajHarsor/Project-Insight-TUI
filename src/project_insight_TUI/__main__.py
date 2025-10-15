@@ -44,7 +44,8 @@ class MainGUI(App):
         
 
 def app():
-    return MainGUI()
+    main_app = MainGUI()
+    main_app.run()
 
 def main():
     app = MainGUI()
