@@ -168,6 +168,11 @@ def generate_compliance_tables(participant_id: str):
             pl.col("Name").str.strip_chars().alias("Name"),
         )
         
+        # Remove punctuation from "Name" column
+        survey = survey.with_columns(
+            pl.col("Name").str.replace_all(r"[^\w\s]", "").alias("Name"),
+        )
+        
         survey_list[idx] = survey  # Update the original list
     
     survey_1a_df = survey_list[0]
@@ -212,6 +217,10 @@ def generate_compliance_tables(participant_id: str):
         else:
             use_age = False
         print(f"Use age for disambiguation: {use_age}")
+        
+        # Remove all whitespace and punctuation from ID
+        ID = ID.replace(" ", "")
+        ID = re.sub(r"[^\w\s]", "", ID)
     except Exception as e:
         print(f"Error retrieving participant initials: {e}")
         message = f"Error retrieving participant initials: {e}"
@@ -1571,6 +1580,11 @@ def compliance_check_day_level(date_obj, filtered_df_active_full, date_str, date
             pl.col("Name").str.strip_chars().alias("Name")
         )
 
+        # Remove punctuation from "Name" column
+        survey = survey.with_columns(
+            pl.col("Name").str.replace_all(r"[^\w\s]", "").alias("Name"),
+        )
+
         survey_list[idx] = survey  # Update the original list
 
     survey_1a_df = survey_list[0]
@@ -1592,6 +1606,11 @@ def compliance_check_day_level(date_obj, filtered_df_active_full, date_str, date
         pl.col("Age")
     )
     
+    # Remove any whitespace and punctuation from initials
+    merged_df = merged_df.with_columns(
+        pl.col("initials").str.strip_chars().str.replace_all(r"[^\w\s]", "").alias("initials")
+    )
+
     # This list will store the results for each participant
     compliance_results = []
     
@@ -2299,6 +2318,3 @@ def check_two_nrs_in_a_row(df):
                 two_missed.append(row['ID # (Days in Study)'])
                 break
     return two_missed
-
-#TODO: Add schedules for active participants to the reports
-#TODO: Double Check logic for adding NRs (some people are getting them when a survey isn't sent yet)
